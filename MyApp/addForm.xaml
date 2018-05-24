@@ -1,0 +1,37 @@
+﻿<Window x:Class="MyApp.addForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyApp"
+        mc:Ignorable="d"
+        Title="Параметры добавления" Height="293.733" Width="312.267" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+    <Grid>
+        <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="125" Height="205" VerticalAlignment="Top">
+            <Label Content="Логин" VerticalAlignment="Top" FontSize="18" Margin="0,0,10,0"/>
+            <Label Content="Пароль" Margin="0,34,10,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label Content="Роль" Margin="0,68,10,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label Content="Имя" Margin="0,100,10,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label Content="Фамилия" Margin="0,131,10,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label Content="Пол" Margin="0,161,10,0" VerticalAlignment="Top" FontSize="18"/>
+        </Grid>
+        <Button Content="Добавить" Margin="98,215,97.6,0" VerticalAlignment="Top" Height="35" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" Click="Button_Click"/>
+        <Grid Margin="140,10,9.6,49">
+            <TextBox x:Name="LoginEdit" Height="26" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16" Margin="10,10,10,0"/>
+            <TextBox x:Name="PasswordEdit" Height="25" Margin="10,44,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16"/>
+            <ComboBox x:Name="RoleBox" SelectedValuePath="Content" Margin="10,75,10,0" VerticalAlignment="Top" Height="26" FontSize="16">
+                <ComboBoxItem Name="Teacher" Content="Преподаватель" />
+                <ComboBoxItem Name="Student" Content="Студент" />
+                <ComboBoxItem Name="Depot" Content="Учебная часть" />
+                <ComboBoxItem Name="Admin" Content="Администратор" />
+            </ComboBox>
+            <TextBox x:Name="NameEdit" Height="26" Margin="10,106,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16"/>
+            <TextBox x:Name="SurnameEdit" Height="25" Margin="10,137,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16"/>
+            <ComboBox x:Name="GenderBox" SelectedValuePath="Content" Margin="10,168,10,0" VerticalAlignment="Top" Height="26" FontSize="16">
+                <ComboBoxItem Name="Male" Content="Мужской" />
+                <ComboBoxItem Name="Female" Content="Женский"/>
+            </ComboBox>
+
+        </Grid>
+    </Grid>
+</Window>
