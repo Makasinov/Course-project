@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyApp"
         mc:Ignorable="d"
-        Title="Демо" Height="520" Width="785" WindowStyle="None" MinWidth="785" MinHeight="520" Activated="Window_GotFocus">
+        Title="Демо" Height="520" Width="785" WindowStyle="None" MinWidth="785" MinHeight="520" Activated="Window_GotFocus" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -13,9 +13,9 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Height="34" VerticalAlignment="Top" Background="#FFBFBFBF" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Margin="0,-3,-3.4,0">
+        <Grid Height="34" VerticalAlignment="Top" Background="#FFBFBFBF" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Margin="0,-3,-3.6,0">
             <Image Name="closeButton" Height="23" Margin="0,4,4,0" VerticalAlignment="Top" Source="icons/error.png" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave" HorizontalAlignment="Right" Width="23"/>
-            <Label Name="rights" Content="Статус" Margin="177,0,0,0" VerticalAlignment="Top" FontStyle="Italic" FontSize="18" Height="31" HorizontalAlignment="Left" Width="482" FontFamily="Times New Roman" FontWeight="Bold"/>
+            <Label Name="rights" Content="Статус" Margin="177,3,0,0" VerticalAlignment="Top" FontStyle="Italic" FontSize="18" Height="31" HorizontalAlignment="Left" Width="482" FontFamily="Times New Roman" FontWeight="Bold"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Width="179" Margin="-3,-3,0,-3">
             <Grid.Background>
@@ -41,39 +41,64 @@
                 <Image HorizontalAlignment="Right" Height="27" Margin="0,124,147.2,0" VerticalAlignment="Top" Width="27" Source="icons/settings.png"/>
                 <Image Height="24" Margin="0,50,148.2,0" VerticalAlignment="Top" Source="icons/table.png" HorizontalAlignment="Right" Width="24"/>
                 <Image Height="25" Margin="0,10,148.2,0" VerticalAlignment="Top" Source="icons/home.png" HorizontalAlignment="Right" Width="24"/>
-                <Button x:Name="Home_Copy" Content="Войти" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Times New Roman" FontSize="24" Margin="7,-40,0.2,0" FontStyle="Italic" Click="Home_Copy_Click"/>
+                <Button x:Name="Home_Copy" Content="Войти" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Times New Roman" FontSize="24" Margin="7,-40,4.2,0" FontStyle="Italic" Click="Home_Copy_Click"/>
             </Grid>
             <Image Name="Avatar" Height="100" Margin="38,10,40,0" VerticalAlignment="Top" Source="icons/user.png" MouseEnter="Image_MouseEnter_1" MouseLeave="Image_MouseLeave_1" MouseLeftButtonDown="Avatar_MouseLeftButtonDown_1"/>
         </Grid>
-        <Grid Name="MainGrid" Margin="175,29,-3.8,-3" Background="#FFBFBFBF">
+        <Grid Name="MainGrid" Margin="175,29,-3.8,-3" Background="#FFBFBFBF" MouseLeftButtonDown="MainGrid_MouseLeftButtonDown">
 
-            <Grid Name="gTables" Visibility="Hidden" Margin="10">
+            <Grid Name="gTables" Visibility="Visible" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <ListView Name="listViewTables" Margin="0,58,10,10.4" FontSize="16">
+                <ListView Name="listViewTables" Margin="0,45,10.2,10" FontSize="16">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Изменить" DisplayMemberBinding="{Binding Path=Change}" Width="100"/>
-                            <GridViewColumn Header="Столбец 1" DisplayMemberBinding="{Binding Path=Column1}" Width="100"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col1}" Width="100"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col2}" Width="100"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col3}" Width="100"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col4}" Width="100"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col5}" Width="100"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ComboBox Name="comboBoxTable" HorizontalAlignment="Left" Margin="79,15,0,0" VerticalAlignment="Top" Width="201" SelectionChanged="ComboBox_SelectionChanged" FontSize="14"/>
+                <ComboBox Name="comboBoxTable" HorizontalAlignment="Left" Margin="79,15,0,0" VerticalAlignment="Top" Width="201" SelectionChanged="ComboBox_SelectionChanged" FontSize="14">
+                    <ComboBoxItem Content="Учебный план"/>
+                    <ComboBoxItem Content="Занятые темы"/>
+                    <ComboBoxItem Content="Группы"/>
+                    <ComboBoxItem Content="Специальности"/>
+                    <ComboBoxItem Content="Студенты"/>
+                    <ComboBoxItem Content="Предметы"/>
+                    <ComboBoxItem Content="Темы"/>
+                </ComboBox>
                 <Label Content="Таблица" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="18"/>
+                <Button Name="ButtonAdd" IsEnabled="False" Visibility="Visible" Content="Добавить" HorizontalAlignment="Left" Margin="285,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonAdd_Click"/>
+                <Button Name="ButtonChange" IsEnabled="False" Visibility="Visible" Content="Изменить" HorizontalAlignment="Left" Margin="374,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonChange_Click"/>
+                <Button Name="ButtonDelete" IsEnabled="False" Visibility="Visible" Content="Удалить" HorizontalAlignment="Left" Margin="463,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonDelete_Click"/>
             </Grid>
 
-            <Grid Name="gUsers" Visibility="Visible" Margin="10">
+            <Grid Name="gUsers" Visibility="Hidden" Margin="10">
                 <ListView Name="listViewUsers" Margin="0,57,10,10.4" FontSize="16">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn/>
+                            <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Login}" Width="100"/>
+                            <GridViewColumn Header="Role" DisplayMemberBinding="{Binding Role}" Width="100"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                            <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" Width="100"/>
+                            <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Gender}" Width="100"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
                 <Label Content="Роль" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Times New Roman"/>
-                <ComboBox Name="comboBoxRole" HorizontalAlignment="Left" Margin="137,16,0,0" VerticalAlignment="Top" Width="221" Height="30" FontSize="16"/>
-                <Button Content="Добавить" HorizontalAlignment="Left" Margin="378,16,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_2" Height="30" FontSize="18"/>
+                <ComboBox Name="comboBoxRole" HorizontalAlignment="Left" Margin="137,16,0,0" VerticalAlignment="Top" Width="221" Height="30" FontSize="16" SelectionChanged="comboBoxRole_SelectionChanged">
+                    <ComboBoxItem Content="Все"/>
+                    <ComboBoxItem Content="Admin"/>
+                    <ComboBoxItem Content="Depot"/>
+                    <ComboBoxItem Content="Teacher"/>
+                    <ComboBoxItem Content="Student"/>
+                </ComboBox>
+                <Button x:Name="ButtonAdd2" Content="Добавить" HorizontalAlignment="Left" Margin="378,16,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_2" Height="30" FontSize="18"/>
+                <Button x:Name="ButtonDelete2" Content="Удалить" Margin="479,16,10.2,0" VerticalAlignment="Top" Height="30" Click="Button_Click_3" FontSize="18" IsEnabled="False"/>
 
 
             </Grid>
@@ -91,12 +116,12 @@
             </Grid>
 
             <Grid Name="gHome" Visibility="Hidden" Margin="10">
-                <Grid Margin="2,75,18,0" Background="#FFCDCDCD" Height="55" VerticalAlignment="Top">
+                <Grid Margin="0,80,20.2,0" Background="#FFCDCDCD" Height="55" VerticalAlignment="Top">
                     <Grid.Effect>
                         <BlurEffect/>
                     </Grid.Effect>
                 </Grid>
-                <TextBlock Margin="10,75,18,0" TextWrapping="Wrap" FontSize="16" Height="55" VerticalAlignment="Top"><Run Text="Студент: Максимов И.А."/><LineBreak/><Run Text="Преподаватель: Ларионова Е.А."/></TextBlock>
+                <TextBlock Margin="10,80,17.2,0" TextWrapping="Wrap" FontSize="16" Height="55" VerticalAlignment="Top"><Run Text="Студент: Максимов И.А."/><LineBreak/><Run Text="Преподаватель: Ларионова Е.А."/></TextBlock>
                 <Grid Margin="2,149,18,0" Background="#FFCDCDCD" Opacity="0.74" Height="55" VerticalAlignment="Top">
                     <Grid.Effect>
                         <BlurEffect/>

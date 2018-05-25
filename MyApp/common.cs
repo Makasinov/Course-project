@@ -13,6 +13,7 @@ namespace MyApp
 
         static public string  connectionString;
         static public bool    connectedToDB;
+
         static public string  username;
         static public string  password;
 

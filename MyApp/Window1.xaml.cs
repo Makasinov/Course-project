@@ -28,8 +28,8 @@ namespace MyApp
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             common.wannaToConnect = true;
-            common.username = username.Text;
-            common.password = password.Text;
+            common.username = username.Text.ToString();
+            common.password = password.Text.ToString();
             this.Hide();
             this.Close();
             Console.WriteLine("username - " + username.Text + "\n" + "password - " + password.Text);

@@ -19,17 +19,17 @@
         <Grid Margin="140,10,9.6,49">
             <TextBox x:Name="LoginEdit" Height="26" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16" Margin="10,10,10,0"/>
             <TextBox x:Name="PasswordEdit" Height="25" Margin="10,44,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16"/>
-            <ComboBox x:Name="RoleBox" SelectedValuePath="Content" Margin="10,75,10,0" VerticalAlignment="Top" Height="26" FontSize="16">
-                <ComboBoxItem Name="Teacher" Content="Преподаватель" />
-                <ComboBoxItem Name="Student" Content="Студент" />
-                <ComboBoxItem Name="Depot" Content="Учебная часть" />
-                <ComboBoxItem Name="Admin" Content="Администратор" />
+            <ComboBox x:Name="RoleBox" SelectedValuePath="Content" Margin="10,75,10,0" VerticalAlignment="Top" Height="26" FontSize="14">
+                <ComboBoxItem Name="Teacher" Content="Teacher" />
+                <ComboBoxItem Name="Student" Content="Student" />
+                <ComboBoxItem Name="Depot" Content="Depot" />
+                <ComboBoxItem Name="Admin" Content="Admin" />
             </ComboBox>
             <TextBox x:Name="NameEdit" Height="26" Margin="10,106,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16"/>
             <TextBox x:Name="SurnameEdit" Height="25" Margin="10,137,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="16"/>
-            <ComboBox x:Name="GenderBox" SelectedValuePath="Content" Margin="10,168,10,0" VerticalAlignment="Top" Height="26" FontSize="16">
-                <ComboBoxItem Name="Male" Content="Мужской" />
-                <ComboBoxItem Name="Female" Content="Женский"/>
+            <ComboBox x:Name="GenderBox" SelectedValuePath="Content" Margin="10,168,10,0" VerticalAlignment="Top" Height="26" FontSize="14">
+                <ComboBoxItem Name="Male" Content="Male" />
+                <ComboBoxItem Name="Female" Content="Female"/>
             </ComboBox>
 
         </Grid>

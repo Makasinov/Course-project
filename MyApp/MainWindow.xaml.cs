@@ -40,7 +40,6 @@ namespace MyApp
             this.DragMove();
         }
 
-
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Environment.Exit(0);
@@ -56,9 +55,90 @@ namespace MyApp
             this.closeButton.Height = this.closeButton.Height + 2;
         }
 
+        public class MyItem2
+        {
+            public string Col1 { get; set; }
+            public string Col2 { get; set; }
+            public string Col3 { get; set; }
+            public string Col4 { get; set; }
+            public string Col5 { get; set; }
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ButtonAdd.IsEnabled = true;
+            ButtonDelete.IsEnabled = true;
+            ButtonChange.IsEnabled = true;
+            Console.WriteLine(comboBoxTable.SelectedIndex);
+            string req = "";
+            switch(comboBoxTable.SelectedIndex)
+            {
+                case 0:
+                    req = "edu_plan"; break;
+                case 1:
+                    req = "engaged_themes"; break;
+                case 2:
+                    req = "groups"; break;
+                case 3:
+                    req = "specs"; break;
+                case 4:
+                    req = "students"; break;
+                case 5:
+                    req = "subjects"; break;
+                case 6:
+                    req = "themes"; break;
+            }
 
+            string connStr = connectionString.Text +
+                    "user id=" + common.username +
+                    ";password=" + common.password;
+            Console.WriteLine(connStr);
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Попытка подключения...");
+                conn.Open();
+                string sql = "call show_" + req;
+                Console.WriteLine(sql);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                listViewTables.Items.Clear();
+                string s1 = "";
+                string s2 = "";
+                string s3 = "";
+                string s4 = "";
+                string s5 = "";
+                while (rdr.Read())
+                {
+                    try
+                    {
+                        s1 = rdr[0].ToString();
+                        s2 = rdr[1].ToString();
+                        s3 = rdr[2].ToString();
+                        s4 = rdr[3].ToString();
+                        s5 = rdr[4].ToString();
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+
+                    listViewTables.Items.Add(new MyItem2
+                    {
+                        Col1 = s1,
+                        Col2 = s2,
+                        Col3 = s3,
+                        Col4 = s4,
+                        Col5 = s5
+                    });
+                }
+                rdr.Close();
+                conn.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void Image_MouseEnter_1(object sender, MouseEventArgs e)
@@ -121,111 +201,209 @@ namespace MyApp
             this.gUser.Visibility = Visibility.Visible;
         }
 
-        private void Home_Copy_Click(object sender, RoutedEventArgs e)
+        private void Home_Copy_Click(object sender, RoutedEventArgs e) // Авторизация
         {
             win = new MyApp.Window1();
             win.Show();
         }
 
-        private void Window_GotFocus(object sender, EventArgs e)
+        public class MyItem
+        {
+            public string Login { get; set; }
+            public string Role { get; set; }
+            public string Name { get; set; }
+            public string Surname { get; set; }
+            public string Gender { get; set; }
+        }
+
+        public void setParams(string connStr)
+        {
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Попытка подключения...");
+                conn.Open();
+                string sql = "getmyinfo('" + common.username + "')";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                rdr.Read();
+                string name = "Console - No Answer";
+                string surname = "Console - No Answer";
+                string role = "Console - No Answer";
+                string gender = "Console - No Answer";
+                try
+                {
+                    name = rdr[0].ToString();
+                    surname = rdr[1].ToString();
+                    role = rdr[2].ToString();
+                    gender = rdr[3].ToString();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Пусто");
+                }
+                rdr.Close();
+                Console.WriteLine(name);
+                Name_Copy.Content = name;
+                Surname_Copy.Content = surname;
+                Surname_Copy1.Content = role;
+                Home_Copy.Content = surname;
+                rights.Content = role;
+
+                if (gender == "Male")
+                    try
+                    {
+                        Avatar.Source = new BitmapImage(
+                            new Uri("pack://application:,,,/MyApp;component/icons/male.png"));
+                        Avatar_Copy.Source = new BitmapImage(
+                            new Uri("pack://application:,,,/MyApp;component/icons/male.png"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        Console.WriteLine(Avatar.Source.ToString());
+                    }
+                else if (gender == "Female")
+                    try
+                    {
+                        Avatar.Source = new BitmapImage(
+                            new Uri("pack://application:,,,/MyApp;component/icons/female.png"));
+                        Avatar_Copy.Source = new BitmapImage(
+                            new Uri("pack://application:,,,/MyApp;component/icons/female.png"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        Console.WriteLine(Avatar.Source.ToString());
+                    }
+                else try
+                    {
+                        Avatar.Source = new BitmapImage(
+                            new Uri("pack://application:,,,/MyApp;component/icons/user.png"));
+                        Avatar_Copy.Source = new BitmapImage(
+                            new Uri("pack://application:,,,/MyApp;component/icons/user.png"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        Console.WriteLine(Avatar.Source.ToString());
+                    }
+                sql = "call show_users";
+                cmd = new MySqlCommand(sql, conn);
+                rdr = cmd.ExecuteReader();
+                listViewUsers.Items.Clear();
+                listViewTables.Items.Clear();
+                while (rdr.Read())
+                    try
+                    {
+                        listViewUsers.Items.Add(new MyItem
+                        {
+                            Login = rdr[0].ToString(),
+                            Role = rdr[1].ToString(),
+                            Name = rdr[2].ToString(),
+                            Surname = rdr[3].ToString(),
+                            Gender = rdr[4].ToString()
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                rdr.Close();
+                conn.Close();
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public void setUsersTable(string connStr)
+        {
+            Console.WriteLine("wannaToCreate" + common.username + "\t" + common.password);
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Попытка подключения...");
+                conn.Open();
+
+                string sql = "call add_User('" +
+                             common.nUsername +
+                             "','" +
+                             common.nPassword +
+                             "','" +
+                             common.nRole +
+                             "','" +
+                             common.nName +
+                             "','" +
+                             common.nSurname +
+                             "','" +
+                             common.nGender +
+                             "')";
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                rdr.Read();
+                rdr.Close();
+                conn.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Ошибка добавления");
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void Window_GotFocus(object sender, EventArgs e) // Обработчик
         {
             if (common.wannaToConnect)
             {
                 common.wannaToConnect = false;
-                var connStr = connectionString.Text +
+                string connStr = connectionString.Text +
                     "user id=" + common.username +
                     ";password=" + common.password;
-
-                MySqlConnection conn = new MySqlConnection(connStr);
-                try
-                {
-                    Console.WriteLine("Попытка подключения...");
-                    conn.Open();
-                    string sql = "getmyinfo('" + common.username + "')";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    MySqlDataReader rdr = cmd.ExecuteReader();
-                    rdr.Read();
-                    string name = "Console - No Answer";
-                    string surname = "Console - No Answer";
-                    string role = "Console - No Answer";
-                    string gender = "Console - No Answer";
-                    try
-                    {
-                        name = rdr[0].ToString();
-                        surname = rdr[1].ToString();
-                        role = rdr[2].ToString();
-                        gender = rdr[3].ToString();
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Пусто");
-                    }
-                    Console.WriteLine(name);
-                    Name_Copy.Content = name;
-                    Surname_Copy.Content = surname;
-                    Surname_Copy1.Content = role;
-                    Home_Copy.Content = surname;
-                    rights.Content = role;
-
-                    if (gender == "male")
-                        try
-                        {
-                            Avatar.Source = new BitmapImage(
-                                new Uri("pack://application:,,,/MyApp;component/icons/male.png"));
-                            Avatar_Copy.Source = new BitmapImage(
-                                new Uri("pack://application:,,,/MyApp;component/icons/male.png"));
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            Console.WriteLine(Avatar.Source.ToString());
-                        }
-                    else if (gender == "female")
-                        try
-                        {
-                            Avatar.Source = new BitmapImage(
-                                new Uri("pack://application:,,,/MyApp;component/icons/female.png"));
-                            Avatar_Copy.Source = new BitmapImage(
-                                new Uri("pack://application:,,,/MyApp;component/icons/female.png"));
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            Console.WriteLine(Avatar.Source.ToString());
-                        }
-                    else try
-                        {
-                            Avatar.Source = new BitmapImage(
-                                new Uri("pack://application:,,,/MyApp;component/icons/user.png"));
-                            Avatar_Copy.Source = new BitmapImage(
-                                new Uri("pack://application:,,,/MyApp;component/icons/user.png"));
-                        }
-                        catch(Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                            Console.WriteLine(Avatar.Source.ToString());
-                        }
-                    common.connectionString = connStr;
-            }
-                catch(MySql.Data.MySqlClient.MySqlException ex)
-                {
-                    MessageBox.Show("Не существует пользователя с таким логином/паролем");
-                    Console.WriteLine(ex.ToString());
-                }
-                conn.Close();
+                setParams(connStr);
             }
             else if (common.wannaToCreate)
             {
                 common.wannaToCreate = false;
-                Console.WriteLine("wannaToCreate");
-
+                setUsersTable(common.connectionString);
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_2(object sender, RoutedEventArgs e) // Добавить кнопка
         {
             form = new addForm();
             form.Show();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e) // Удалить кнопка
+        {
+
+        }
+
+        private void MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonChange_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void comboBoxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ButtonDelete2.IsEnabled = true;
         }
     }
 }

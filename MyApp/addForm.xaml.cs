@@ -26,60 +26,35 @@ namespace MyApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int error = 0;
+            bool error = false;
             try
             {
                 common.nRole = RoleBox.SelectedValue.ToString();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                error = 1;
-            }
-            try
-            {
                 common.nGender = GenderBox.SelectedValue.ToString();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                error = 2;
+                error = true;
             }
-
-            if (common.nGender == Male.ToString())
-            {
-                common.nGender = common.nGender = "male";
-            }
-            else if (common.nGender == Female.ToString())
-            {
-                common.nGender = common.nGender = "female";
-            }
-
+            common.nGender   = GenderBox.Text.ToString();
             common.nUsername = LoginEdit.Text.ToString();
             common.nPassword = PasswordEdit.Text.ToString();
-            common.nName = NameEdit.Text.ToString();
-            common.nSurname = SurnameEdit.Text.ToString();
-                switch (error)
-                {
-                    case 0:
-                        if (common.nUsername.ToString() != "" &&
-                        common.nPassword.ToString() != "" &&
-                        common.nName.ToString() != "" &&
-                        common.nSurname.ToString() != "")
-                        {
-                            common.wannaToCreate = true;
-                            Hide();
-                            Close();
-                        } else
-                        MessageBox.Show("Некоторые поля не заполнены");
-                        break;
-                    case 1:
-                        MessageBox.Show("Роль не выбрана");
-                        break;
-                    case 2:
-                        MessageBox.Show("Пол не выбран");
-                        break;
+            common.nName     = NameEdit.Text.ToString();
+            common.nSurname  = SurnameEdit.Text.ToString();
 
-                }
+            if (common.nUsername.ToString() != "" &&
+                common.nPassword.ToString() != "" &&
+                common.nName.ToString() != "" &&
+                common.nSurname.ToString() != "" &&
+                !error)
+            {
+                common.wannaToCreate = true;
+                Hide();
+                Close();
+            }
+            else MessageBox.Show("Некоторые поля не заполнены");
+
         }
+    }
 }
