@@ -25,7 +25,13 @@ namespace MyApp
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
         TablesAddForm tablesAddForm;
-
+        public class Data
+        {
+            public int id;
+            public string login;
+        }
+        List<Data> idLogin = new List<Data>();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -298,6 +304,7 @@ namespace MyApp
                     rdr = cmd.ExecuteReader();
                     listViewUsers.Items.Clear();
                     listViewTables.Items.Clear();
+                    int counter = 0;
                     while (rdr.Read())
                         try
                         {
@@ -309,6 +316,11 @@ namespace MyApp
                                 Surname = rdr[3].ToString(),
                                 Gender  = rdr[4].ToString()
                             });
+                            Data it = new Data();
+                            it.id = counter;
+                            it.login = rdr[0].ToString();
+                            idLogin.Add(it);
+                            counter++;
                         }
                         catch (Exception ex)
                         {
@@ -370,18 +382,19 @@ namespace MyApp
 
         private void Window_GotFocus(object sender, EventArgs e) // Обработчик
         {
+            string connStr = connectionString.Text +
+                      "user id=" + common.username +
+                      ";password=" + common.password;
             if (common.wannaToConnect)
             {
                 common.wannaToConnect = false;
-                string connStr = connectionString.Text +
-                    "user id=" + common.username +
-                    ";password=" + common.password;
                 setParams(connStr);
             }
             else if (common.wannaToCreateUser)
             {
                 common.wannaToCreateUser = false;
-                setUsersTable(common.connectionString);
+                setUsersTable(connStr);
+                setParams(connStr);
             }
             else if (common.wannaToCreateTheme)
             {
@@ -400,7 +413,37 @@ namespace MyApp
         {
             try
             {
-                Console.WriteLine(listViewUsers.ItemsSource);
+                bool deleted = false;
+                int id = listViewUsers.SelectedIndex;
+                foreach (Data it in idLogin)
+                    if (it.id == id && !deleted)
+                        if (MessageBox.Show(
+                            "Уверены что хотите удалить пользователя " + it.login + "?",
+                            "Подтвердите ", 
+                            MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+                            MySqlConnection conn = new MySqlConnection(connStr);
+                            try
+                            {
+                                Console.WriteLine("Попытка подключения...");
+                                conn.Open();
+                                string sql = "call rm_user('" + it.login + "')";
+                                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                                MySqlDataReader rdr = cmd.ExecuteReader();
+                                rdr.Read();
+                                rdr.Close();
+                                conn.Close();
+                                MessageBox.Show("Пользователь " + it.login + " успешно удалён!");
+                                listViewUsers.Items.RemoveAt(it.id);
+                                deleted = true;
+                            } catch (MySqlException ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                            }
+                        }
             }
             catch(Exception ex)
             {
