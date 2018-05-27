@@ -47,7 +47,7 @@
             <Image Name="Avatar" Height="100" Margin="38,10,40,0" VerticalAlignment="Top" Source="icons/user.png" MouseEnter="Image_MouseEnter_1" MouseLeave="Image_MouseLeave_1" MouseLeftButtonDown="Avatar_MouseLeftButtonDown_1"/>
         </Grid>
         <Grid Name="MainGrid" Margin="175,29,-3.8,-3" Background="#FFBFBFBF" MouseLeftButtonDown="MainGrid_MouseLeftButtonDown">
-            <Grid Name="gTables" Visibility="Hidden" Margin="10">
+            <Grid Name="gTables" Visibility="Visible" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -82,7 +82,7 @@
                 <Button Name="ButtonDelete" IsEnabled="False" Visibility="Visible" Content="Удалить" HorizontalAlignment="Left" Margin="463,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonDelete_Click"/>
             </Grid>
 
-            <Grid Name="gUsers" Visibility="Visible" Margin="10">
+            <Grid Name="gUsers" Visibility="Hidden" Margin="10">
                 <ListView Name="listViewUsers" Margin="0,57,10,10.4" FontSize="16">
                     <ListView.View>
                         <GridView>

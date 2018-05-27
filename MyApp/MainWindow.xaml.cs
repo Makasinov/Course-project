@@ -73,9 +73,13 @@ namespace MyApp
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ButtonAdd.IsEnabled = true;
-            ButtonDelete.IsEnabled = true;
-            ButtonChange.IsEnabled = true;
+            if ( common.nRole == "Admin" || common.nRole == "root" || 
+                 common.nRole == "Teacher" || common.nRole == "Depot" )
+            {
+                ButtonAdd.IsEnabled = true;
+                ButtonDelete.IsEnabled = true;
+                ButtonChange.IsEnabled = true;
+            }
             Console.WriteLine(comboBoxTable.SelectedIndex);
             string req = "";
             switch(comboBoxTable.SelectedIndex)
@@ -329,6 +333,9 @@ namespace MyApp
                     rdr.Close();
                     conn.Close();
                 } else {
+                    ButtonAdd.IsEnabled     = false;
+                    ButtonChange.IsEnabled  = false;
+                    ButtonDelete.IsEnabled  = false;
                     ButtonAdd2.IsEnabled    = false;
                     ButtonDelete2.IsEnabled = false;
                     listViewUsers.Items.Clear();
