@@ -24,6 +24,7 @@ namespace MyApp
     {
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
+        TablesAddForm tablesAddForm = new TablesAddForm();
 
         public MainWindow()
         {
@@ -224,19 +225,19 @@ namespace MyApp
                 Console.WriteLine("Попытка подключения...");
                 conn.Open();
                 string sql = "getmyinfo('" + common.username + "')";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlCommand cmd    = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 rdr.Read();
-                string name = "Console - No Answer";
+                string name    = "Console - No Answer";
                 string surname = "Console - No Answer";
-                string role = "Console - No Answer";
-                string gender = "Console - No Answer";
+                string role    = "Console - No Answer";
+                string gender  = "Console - No Answer";
                 try
                 {
-                    name = rdr[0].ToString();
+                    name    = rdr[0].ToString();
                     surname = rdr[1].ToString();
-                    role = rdr[2].ToString();
-                    gender = rdr[3].ToString();
+                    role    = rdr[2].ToString();
+                    gender  = rdr[3].ToString();
                 }
                 catch (Exception)
                 {
@@ -244,11 +245,12 @@ namespace MyApp
                 }
                 rdr.Close();
                 Console.WriteLine(name);
-                Name_Copy.Content = name;
-                Surname_Copy.Content = surname;
+                Name_Copy.Content     = name;
+                Surname_Copy.Content  = surname;
                 Surname_Copy1.Content = role;
-                Home_Copy.Content = surname;
-                rights.Content = role;
+                Home_Copy.Content     = surname;
+                rights.Content        = role;
+                common.nRole          = role;
 
                 if (gender == "Male")
                     try
@@ -288,29 +290,39 @@ namespace MyApp
                         Console.WriteLine(ex.ToString());
                         Console.WriteLine(Avatar.Source.ToString());
                     }
-                sql = "call show_users";
-                cmd = new MySqlCommand(sql, conn);
-                rdr = cmd.ExecuteReader();
-                listViewUsers.Items.Clear();
-                listViewTables.Items.Clear();
-                while (rdr.Read())
-                    try
-                    {
-                        listViewUsers.Items.Add(new MyItem
+
+                Console.WriteLine("call show_users?");
+                if (common.nRole == "Admin" || common.nRole == "root")
+                {
+                    Console.WriteLine("call show_users!");
+                    sql = "call show_users";
+                    cmd = new MySqlCommand(sql, conn);
+                    rdr = cmd.ExecuteReader();
+                    listViewUsers.Items.Clear();
+                    listViewTables.Items.Clear();
+                    while (rdr.Read())
+                        try
                         {
-                            Login = rdr[0].ToString(),
-                            Role = rdr[1].ToString(),
-                            Name = rdr[2].ToString(),
-                            Surname = rdr[3].ToString(),
-                            Gender = rdr[4].ToString()
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
-                rdr.Close();
-                conn.Close();
+                            listViewUsers.Items.Add(new MyItem
+                            {
+                                Login   = rdr[0].ToString(),
+                                Role    = rdr[1].ToString(),
+                                Name    = rdr[2].ToString(),
+                                Surname = rdr[3].ToString(),
+                                Gender  = rdr[4].ToString()
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                    rdr.Close();
+                    conn.Close();
+                } else {
+                    ButtonAdd2.IsEnabled    = false;
+                    ButtonDelete2.IsEnabled = false;
+                    listViewUsers.Items.Clear();
+                }
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
@@ -353,6 +365,11 @@ namespace MyApp
             }
         }
 
+        public void addNewTheme(string connStr)
+        {
+
+        }
+
         private void Window_GotFocus(object sender, EventArgs e) // Обработчик
         {
             if (common.wannaToConnect)
@@ -363,10 +380,15 @@ namespace MyApp
                     ";password=" + common.password;
                 setParams(connStr);
             }
-            else if (common.wannaToCreate)
+            else if (common.wannaToCreateUser)
             {
-                common.wannaToCreate = false;
+                common.wannaToCreateUser = false;
                 setUsersTable(common.connectionString);
+            }
+            else if (common.wannaToCreateTheme)
+            {
+                common.wannaToCreateTheme = false;
+                addNewTheme(common.connectionString);
             }
         }
 
@@ -388,7 +410,8 @@ namespace MyApp
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            tablesAddForm = new TablesAddForm();
+            tablesAddForm.Show();
         }
 
         private void ButtonChange_Click(object sender, RoutedEventArgs e)
@@ -403,7 +426,7 @@ namespace MyApp
 
         private void comboBoxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ButtonDelete2.IsEnabled = true;
+            
         }
     }
 }

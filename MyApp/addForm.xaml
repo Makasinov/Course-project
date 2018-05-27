@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyApp"
         mc:Ignorable="d"
-        Title="Параметры добавления" Height="293.733" Width="312.267" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+        Title="Параметры добавления" Height="290" Width="312" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Opacity="0.8">
     <Grid>
         <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="125" Height="205" VerticalAlignment="Top">
             <Label Content="Логин" VerticalAlignment="Top" FontSize="18" Margin="0,0,10,0"/>

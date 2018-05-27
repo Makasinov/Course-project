@@ -8,11 +8,11 @@ namespace MyApp
 {
     public class common
     {
+        static public bool    wannaToCreateTheme;
         static public bool    wannaToConnect;
-        static public bool    wannaToCreate;
+        static public bool    wannaToCreateUser;
 
         static public string  connectionString;
-        static public bool    connectedToDB;
 
         static public string  username;
         static public string  password;

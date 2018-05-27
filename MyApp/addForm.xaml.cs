@@ -49,7 +49,7 @@ namespace MyApp
                 common.nSurname.ToString() != "" &&
                 !error)
             {
-                common.wannaToCreate = true;
+                common.wannaToCreateUser = true;
                 Hide();
                 Close();
             }

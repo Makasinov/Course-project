@@ -47,7 +47,6 @@
             <Image Name="Avatar" Height="100" Margin="38,10,40,0" VerticalAlignment="Top" Source="icons/user.png" MouseEnter="Image_MouseEnter_1" MouseLeave="Image_MouseLeave_1" MouseLeftButtonDown="Avatar_MouseLeftButtonDown_1"/>
         </Grid>
         <Grid Name="MainGrid" Margin="175,29,-3.8,-3" Background="#FFBFBFBF" MouseLeftButtonDown="MainGrid_MouseLeftButtonDown">
-
             <Grid Name="gTables" Visibility="Visible" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -55,13 +54,13 @@
                 <ListView Name="listViewTables" Margin="0,45,10.2,10" FontSize="16">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
-                            <Setter Property="Visibility" Value="Collapsed" />
+                            <!-- <Setter Property="Visibility" Value="Collapsed" /> -->
                         </Style>
                     </ListView.Resources>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col1}" Width="30"/>
-                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col2}" Width="230"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col1}" Width="100"/>
+                            <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col2}" Width="100"/>
                             <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col3}" Width="100"/>
                             <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col4}" Width="100"/>
                             <GridViewColumn Header="" DisplayMemberBinding="{Binding Path=Col5}" Width="100"/>
@@ -104,9 +103,7 @@
                     <ComboBoxItem Content="Student"/>
                 </ComboBox>
                 <Button x:Name="ButtonAdd2" Content="Добавить" HorizontalAlignment="Left" Margin="378,16,0,0" VerticalAlignment="Top" Width="96" Click="Button_Click_2" Height="30" FontSize="18"/>
-                <Button x:Name="ButtonDelete2" Content="Удалить" Margin="479,16,10.2,0" VerticalAlignment="Top" Height="30" Click="Button_Click_3" FontSize="18" IsEnabled="False"/>
-
-
+                <Button x:Name="ButtonDelete2" Content="Удалить" Margin="479,16,10.2,0" VerticalAlignment="Top" Height="30" Click="Button_Click_3" FontSize="18" />
             </Grid>
 
             <Grid Name="gSettings" Visibility="Hidden" Height="418" Margin="10,10,10,0" VerticalAlignment="Top">

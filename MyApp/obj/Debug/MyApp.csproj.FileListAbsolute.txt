@@ -21,3 +21,5 @@ C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\Window1.g.cs
 C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\Window1.baml
 C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\addForm.g.cs
 C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\addForm.baml
+C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\TablesAddForm.g.cs
+C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\TablesAddForm.baml
