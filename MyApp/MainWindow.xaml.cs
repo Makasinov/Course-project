@@ -24,7 +24,7 @@ namespace MyApp
     {
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
-        TablesAddForm tablesAddForm = new TablesAddForm();
+        TablesAddForm tablesAddForm;
 
         public MainWindow()
         {
@@ -291,10 +291,8 @@ namespace MyApp
                         Console.WriteLine(Avatar.Source.ToString());
                     }
 
-                Console.WriteLine("call show_users?");
                 if (common.nRole == "Admin" || common.nRole == "root")
                 {
-                    Console.WriteLine("call show_users!");
                     sql = "call show_users";
                     cmd = new MySqlCommand(sql, conn);
                     rdr = cmd.ExecuteReader();
@@ -400,7 +398,15 @@ namespace MyApp
 
         private void Button_Click_3(object sender, RoutedEventArgs e) // Удалить кнопка
         {
-
+            try
+            {
+                Console.WriteLine(listViewUsers.ItemsSource);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Выберите пользователя для удаления","Ошибка");
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -410,18 +416,29 @@ namespace MyApp
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            tablesAddForm = new TablesAddForm();
+            string connStr = connectionString.Text +
+                    "user id=" + common.username +
+                    ";password=" + common.password;
+            tablesAddForm = new TablesAddForm(connStr,"add");
             tablesAddForm.Show();
         }
 
         private void ButtonChange_Click(object sender, RoutedEventArgs e)
         {
-
+            string connStr = connectionString.Text +
+                    "user id=" + common.username +
+                    ";password=" + common.password;
+            tablesAddForm = new TablesAddForm(connStr, "add");
+            tablesAddForm.Show();
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            string connStr = connectionString.Text +
+                    "user id=" + common.username +
+                    ";password=" + common.password;
+            tablesAddForm = new TablesAddForm(connStr, "delete");
+            tablesAddForm.Show();
         }
 
         private void comboBoxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)

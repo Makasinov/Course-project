@@ -4,23 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyApp"
-        mc:Ignorable="d"
-        Title="Добавление темы" Height="290" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        mc:Ignorable="d" Height="290" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="Параметры">
     <Grid>
-        <Grid Margin="19,151,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
-            <Label Content="Студент" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
-            <ComboBox HorizontalAlignment="Left" Margin="85,4,0,0" VerticalAlignment="Top" Width="182" Height="27" FontSize="14"/>
-        </Grid>
-        <Grid Margin="19,113,0,0" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
-            <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
-            <ComboBox HorizontalAlignment="Left" Margin="85,5,0,0" VerticalAlignment="Top" Width="182" Height="27" FontSize="14"/>
-        </Grid>
-        <Grid Margin="19,10,0,0" HorizontalAlignment="Left" Width="267" Height="103" VerticalAlignment="Top">
-            <Label Content="Название" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-            <TextBox HorizontalAlignment="Left" Height="103" Margin="85,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="14"/>
+        <Button x:Name="Accept" Content="Применить" Margin="110,218,109.6,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
+        <GroupBox Header="Параметры темы" HorizontalAlignment="Left" Height="108" Margin="10,0,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="3,10,4.4,4.6">
+                <Grid Margin="0,38,0,0" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
+                    <Label Content="Тема" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
+                    <ComboBox x:Name="Themes" HorizontalAlignment="Left" Margin="85,5,0,0" VerticalAlignment="Top" Width="182" Height="27"/>
+                </Grid>
+                <Grid Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
+                    <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
+                    <ComboBox x:Name="Subjects" HorizontalAlignment="Left" Margin="85,5,0,0" VerticalAlignment="Top" Width="182" Height="27" FontSize="14" SelectionChanged="Subjects_SelectionChanged"/>
+                </Grid>
 
-        </Grid>
-        <Button Content="Добавить" Margin="110,209,110,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Параметры студента" HorizontalAlignment="Left" Height="105" Margin="10,108,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,5,3.4,2.4">
+                <Grid Margin="0,38,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
+                    <Label Content="Студент" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
+                    <ComboBox x:Name="Students" HorizontalAlignment="Left" Margin="85,4,0,0" VerticalAlignment="Top" Width="182" Height="27" FontSize="14"/>
+                </Grid>
+                <Grid Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
+                    <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
+                    <ComboBox x:Name="Groups" HorizontalAlignment="Left" Margin="85,5,0,0" VerticalAlignment="Top" Width="182" Height="27" FontSize="14" SelectionChanged="Groups_SelectionChanged"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Window>
