@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyApp"
         mc:Ignorable="d"
-        Title="Вход" Height="205.135" Width="271.822" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" WindowStyle="ToolWindow" Opacity="0.8">
+        Title="Вход" Height="205.135" Width="271.822" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" Opacity="0.8">
     <Grid Width="260" Height="170">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

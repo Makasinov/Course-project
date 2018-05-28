@@ -303,6 +303,8 @@ namespace MyApp
 
                 if (common.nRole == "Admin" || common.nRole == "root")
                 {
+                    ButtonAdd2.IsEnabled = true;
+                    ButtonDelete2.IsEnabled = true;
                     sql = "call show_users";
                     cmd = new MySqlCommand(sql, conn);
                     rdr = cmd.ExecuteReader();
@@ -348,11 +350,11 @@ namespace MyApp
 
         public void setUsersTable(string connStr)
         {
-            Console.WriteLine("wannaToCreate" + common.username + "\t" + common.password);
+            //Console.WriteLine("wannaToCreate" + common.username + "\t" + common.password);
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
-                Console.WriteLine("Попытка подключения...");
+                //Console.WriteLine("Попытка подключения...");
                 conn.Open();
 
                 string sql = "call add_User('" +
@@ -467,10 +469,18 @@ namespace MyApp
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             string connStr = connectionString.Text +
-                    "user id=" + common.username +
-                    ";password=" + common.password;
-            tablesAddForm = new TablesAddForm(connStr,"add");
-            tablesAddForm.Show();
+                      "user id=" + common.username +
+                      ";password=" + common.password;
+            if (comboBoxTable.SelectedValue != null)
+                if (comboBoxTable.Text == "Занятые темы")
+                {
+                    tablesAddForm = new TablesAddForm(connStr, "add");
+                    tablesAddForm.Show();
+                } else
+                {
+                    AdaptiveWindow AW = new AdaptiveWindow(connStr, comboBoxTable.Text, "Добавить");
+                    AW.Show();
+                }
         }
 
         private void ButtonChange_Click(object sender, RoutedEventArgs e)
@@ -485,10 +495,18 @@ namespace MyApp
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             string connStr = connectionString.Text +
-                    "user id=" + common.username +
-                    ";password=" + common.password;
-            tablesAddForm = new TablesAddForm(connStr, "delete");
-            tablesAddForm.Show();
+                      "user id=" + common.username +
+                      ";password=" + common.password;
+            if (comboBoxTable.SelectedValue != null)
+                if (comboBoxTable.Text == "Занятые темы")
+                {
+                    tablesAddForm = new TablesAddForm(connStr, "delete");
+                    tablesAddForm.Show();
+                } else
+                {
+                    AdaptiveWindow AW = new AdaptiveWindow(connStr, comboBoxTable.Text, "Удалить");
+                    AW.Show();
+                }
         }
 
         private void comboBoxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)

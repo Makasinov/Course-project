@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyApp"
-        mc:Ignorable="d" Height="290" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="Параметры">
+        mc:Ignorable="d" Height="290" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="Параметры" ShowInTaskbar="False">
     <Grid>
         <Button x:Name="Accept" Content="Применить" Margin="110,218,109.6,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
         <GroupBox Header="Параметры темы" HorizontalAlignment="Left" Height="108" Margin="10,0,0,0" VerticalAlignment="Top" Width="286">
