@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MyApp"
         mc:Ignorable="d" Height="290" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="Параметры" ShowInTaskbar="False">
     <Grid>
-        <Button x:Name="Accept" Content="Применить" Margin="110,218,109.6,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
+        <Button x:Name="Accept" Content="Применить" Margin="106,218,105.6,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
         <GroupBox Header="Параметры темы" HorizontalAlignment="Left" Height="108" Margin="10,0,0,0" VerticalAlignment="Top" Width="286">
             <Grid Margin="3,10,4.4,4.6">
                 <Grid Margin="0,38,0,0" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">

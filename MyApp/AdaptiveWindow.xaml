@@ -6,24 +6,127 @@
         xmlns:local="clr-namespace:MyApp"
         mc:Ignorable="d" Height="290" Width="312" Opacity="0.8" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Button Name="ActionButton" Content="" Margin="110,220,107.6,0" VerticalAlignment="Top" FontSize="16" Click="ActionButton_Click"/>
+
+        <!-- gEducationPlanAdd -->
+        <Grid Name="gEducationPlanAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Label Content="Номер семестра" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="gEducationPlanAddSemester" HorizontalAlignment="Left" Height="23" Margin="106,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
+            <Label Content="Кол-во часов" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="gEducationPlanAddHours" HorizontalAlignment="Left" Height="23" Margin="106,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
+            <Label Content="Год" HorizontalAlignment="Left" Margin="151,10,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="gEducationPlanAddYear" HorizontalAlignment="Left" Height="23" Margin="185,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" FontSize="16"/>
+            <Label Content="Специальность" HorizontalAlignment="Left" Margin="0,72,0,0" VerticalAlignment="Top"/>
+            <Label Content="Предмет" HorizontalAlignment="Left" Margin="0,103,0,0" VerticalAlignment="Top"/>
+            <ComboBox Name="gEducationPlanAddSpec" HorizontalAlignment="Left" Margin="106,75,0,0" VerticalAlignment="Top" Width="170" FontSize="16"/>
+            <ComboBox Name="gEducationPlanAddSubject" HorizontalAlignment="Left" Margin="106,106,0,0" VerticalAlignment="Top" Width="170" FontSize="16"/>
+        </Grid>
+
+        <!-- gEducationPlanDelete -->
+        <Grid Name="gEducationPlanDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Label Content="Номер семестра" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="gEducationPlanDeleteSemester" HorizontalAlignment="Left" Height="23" Margin="106,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
+            <Label Content="Кол-во часов" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="gEducationPlanDeleteHours" HorizontalAlignment="Left" Height="23" Margin="106,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
+            <Label Content="Год" HorizontalAlignment="Left" Margin="151,10,0,0" VerticalAlignment="Top"/>
+            <TextBox Name="gEducationPlanDeleteYear" HorizontalAlignment="Left" Height="23" Margin="185,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" FontSize="16"/>
+            <Label Content="Специальность" HorizontalAlignment="Left" Margin="0,72,0,0" VerticalAlignment="Top"/>
+            <Label Content="Предмет" HorizontalAlignment="Left" Margin="0,103,0,0" VerticalAlignment="Top"/>
+            <ComboBox Name="gEducationPlanDeleteSpec" HorizontalAlignment="Left" Margin="106,75,0,0" VerticalAlignment="Top" Width="170" FontSize="16" Height="23"/>
+            <ComboBox Name="gEducationPlanDeleteSubject" HorizontalAlignment="Left" Margin="106,107,0,0" VerticalAlignment="Top" Width="170" FontSize="16" Height="23"/>
+        </Grid>
+
         <!-- gThemesAdd -->
         <Grid Name="gThemesAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
             <Grid Margin="4,10,10,0" Height="120" VerticalAlignment="Top">
                 <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-                <ComboBox Margin="88,5,0.4,91" FontSize="16"/>
+                <ComboBox Name="gThemesAddSubject" Margin="88,5,0.4,91" FontSize="16"/>
                 <Label Content="Название&#xD;&#xA;темы" HorizontalAlignment="Left" Margin="0,37,0,0" VerticalAlignment="Top" FontSize="16"/>
-                <TextBox Margin="88,42,0.4,3" TextWrapping="Wrap" FontSize="14"/>
+                <TextBox Name="gThemesAddName" Margin="88,42,0.4,3" TextWrapping="Wrap" FontSize="16"/>
             </Grid>
         </Grid>
-        <Button Name="ActionButton" Content="" Margin="110,220,107.6,0" VerticalAlignment="Top" FontSize="16" Click="ActionButton_Click"/>
+
         <!-- gThemesDelete -->
         <Grid Name="gThemesDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
             <Grid Margin="4,10,9.6,0" Height="120" VerticalAlignment="Top">
                 <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-                <ComboBox Margin="88,5,0.4,91" FontSize="16"/>
+                <ComboBox Name="gThemesDeleteSubject" Margin="88,5,0.4,91" FontSize="16"/>
                 <Label Content="Название&#xA;темы" HorizontalAlignment="Left" Margin="0,37,0,0" VerticalAlignment="Top" FontSize="16"/>
-                <ComboBox Margin="88,43,-0.2,53" FontSize="16"/>
+                <ComboBox Name="gThemesDeleteName" Margin="88,43,-0.2,53" FontSize="16"/>
+            </Grid>
+        </Grid>
+
+        <!-- gSpecAdd -->
+        <Grid Name="gSpecAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Код" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+                <Label Content="Название специальности" HorizontalContentAlignment="Center" Margin="0,37,0,0" VerticalAlignment="Top" FontSize="16" Width="262" HorizontalAlignment="Left"/>
+                <TextBox Name="gSpecAddName" Margin="10,69,10.4,48" TextWrapping="Wrap" FontSize="16"/>
+                <TextBox Name="gSpecAddCode" HorizontalAlignment="Left" Height="23" Margin="42,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219"/>
+            </Grid>
+        </Grid>
+
+        <!-- gSpecDelete -->
+        <Grid Name="gSpecDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,9.6,0" Height="120" VerticalAlignment="Top">
+                <Label Content="Название специальности" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="273" Margin="0,0,-0.2,0"/>
+                <ComboBox Name="gSpecDeleteName" Margin="10,37,9.8,59" FontSize="16"/>
+            </Grid>
+        </Grid>
+
+        <!-- gStudentAdd -->
+        <Grid Name="gStudentAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Группа" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="16"/>
+                <ComboBox Name="gStudentAddGroup" HorizontalAlignment="Left" Margin="89,17,0,0" VerticalAlignment="Top" Width="171"/>
+                <Label Content="Фамилия" HorizontalAlignment="Left" Margin="0,47,0,0" VerticalAlignment="Top" FontSize="16"/>
+                <TextBox Name="gStudentAddSurname" HorizontalAlignment="Left" Height="23" Margin="89,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
+            </Grid>
+        </Grid>
+
+        <!-- gStudentDelete -->
+        <Grid Name="gStudentDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+                <ComboBox Name="gStudentDeleteGroup" HorizontalAlignment="Left" Margin="75,7,0,0" VerticalAlignment="Top" Width="187"/>
+                <Label Content="Студент" HorizontalAlignment="Left" Margin="0,37,0,0" VerticalAlignment="Top" Width="70" FontSize="16"/>
+                <ComboBox Name="gStudentDeleteStudent" HorizontalAlignment="Left" Margin="75,44,0,0" VerticalAlignment="Top" Width="187"/>
+            </Grid>
+        </Grid>
+
+        <!-- gGroupAdd -->
+        <Grid Name="gGroupAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Название" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="16"/>
+                <Label Content="Специальность" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,47,0,0" VerticalAlignment="Top" FontSize="16" Width="272"/>
+                <TextBox Name="gGroupAddName" HorizontalAlignment="Left" Height="23" Margin="85,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" FontSize="16"/>
+                <ComboBox Name="gGroupAddSpec" Margin="35,84,34.4,0" VerticalAlignment="Top"/>
+            </Grid>
+        </Grid>
+
+        <!-- gGroupDelete -->
+        <Grid Name="gGroupDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+                <ComboBox Name="gGroupDeleteGroup" HorizontalAlignment="Left" Margin="75,7,0,0" VerticalAlignment="Top" Width="187"/>
+            </Grid>
+        </Grid>
+
+        <!-- gSubjectAdd -->
+        <Grid Name="gSubjectAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Название" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="16"/>
+                <Label Content="Специальность" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,47,0,0" VerticalAlignment="Top" FontSize="16" Width="272"/>
+                <TextBox Name="gSubjectAddName" HorizontalAlignment="Left" Height="23" Margin="85,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" FontSize="16"/>
+                <ComboBox Name="gSubjectAddSpec" Margin="35,84,34.4,0" VerticalAlignment="Top"/>
+            </Grid>
+        </Grid>
+
+        <!-- gSubjectDelete -->
+        <Grid Name="gSubjectDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+                <ComboBox Name="gSubjectDeleteSubject" HorizontalAlignment="Left" Margin="75,7,0,0" VerticalAlignment="Top" Width="187" FontSize="16"/>
             </Grid>
         </Grid>
 

@@ -78,7 +78,6 @@ namespace MyApp
             {
                 ButtonAdd.IsEnabled = true;
                 ButtonDelete.IsEnabled = true;
-                ButtonChange.IsEnabled = true;
             }
             Console.WriteLine(comboBoxTable.SelectedIndex);
             string req = "";
@@ -336,7 +335,6 @@ namespace MyApp
                     conn.Close();
                 } else {
                     ButtonAdd.IsEnabled     = false;
-                    ButtonChange.IsEnabled  = false;
                     ButtonDelete.IsEnabled  = false;
                     ButtonAdd2.IsEnabled    = false;
                     ButtonDelete2.IsEnabled = false;
@@ -481,15 +479,6 @@ namespace MyApp
                     AdaptiveWindow AW = new AdaptiveWindow(connStr, comboBoxTable.Text, "Добавить");
                     AW.Show();
                 }
-        }
-
-        private void ButtonChange_Click(object sender, RoutedEventArgs e)
-        {
-            string connStr = connectionString.Text +
-                    "user id=" + common.username +
-                    ";password=" + common.password;
-            tablesAddForm = new TablesAddForm(connStr, "add");
-            tablesAddForm.Show();
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)

@@ -78,8 +78,7 @@
                 </ComboBox>
                 <Label Content="Таблица" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="18"/>
                 <Button Name="ButtonAdd" IsEnabled="False" Visibility="Visible" Content="Добавить" HorizontalAlignment="Left" Margin="285,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonAdd_Click"/>
-                <Button Name="ButtonChange" IsEnabled="False" Visibility="Visible" Content="Изменить" HorizontalAlignment="Left" Margin="374,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonChange_Click"/>
-                <Button Name="ButtonDelete" IsEnabled="False" Visibility="Visible" Content="Удалить" HorizontalAlignment="Left" Margin="463,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonDelete_Click"/>
+                <Button Name="ButtonDelete" IsEnabled="False" Visibility="Visible" Content="Удалить" HorizontalAlignment="Left" Margin="374,15,0,0" VerticalAlignment="Top" Width="84" Height="24" FontSize="16" Click="ButtonDelete_Click"/>
             </Grid>
             <!-- gUsers -->
             <Grid Name="gUsers" Visibility="Hidden" Margin="10">
