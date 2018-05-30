@@ -69,6 +69,11 @@
       <DependentUpon>addForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="common.cs" />
+    <Compile Include="mydbDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mydbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="TablesAddForm.xaml.cs">
       <DependentUpon>TablesAddForm.xaml</DependentUpon>
     </Compile>
@@ -105,11 +110,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mydbDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>mydbDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

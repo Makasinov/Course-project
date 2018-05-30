@@ -24,8 +24,24 @@ namespace MyApp
             InitializeComponent();
         }
 
+        public bool checkString(string str)
+        {
+            foreach (char c in str)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(c.ToString(), "^[a-zA-Z]"))
+                    return false;
+            return true;
+
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            bool ok = true;
+            //оптимизировать - достаточно регуляркой всю строку проверять, а один символ проверять неэффективно
+            if (ok) ok = checkString(LoginEdit.Text.ToString());
+            if (ok) ok = checkString(PasswordEdit.Text.ToString());
+            if (ok) ok = checkString(NameEdit.Text.ToString());
+            if (ok) ok = checkString(SurnameEdit.Text.ToString());
+
             bool error = false;
             try
             {
@@ -47,13 +63,13 @@ namespace MyApp
                 common.nPassword.ToString() != "" &&
                 common.nName.ToString() != "" &&
                 common.nSurname.ToString() != "" &&
-                !error)
+                !error && ok)
             {
                 common.wannaToCreateUser = true;
                 Hide();
                 Close();
             }
-            else MessageBox.Show("Некоторые поля не заполнены");
+            else MessageBox.Show("Некоторые поля не заполнены или заполнены не верно");
 
         }
     }

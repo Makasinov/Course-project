@@ -33,5 +33,15 @@ namespace MyApp.Properties {
                 return ((string)(this["mydbConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;database=mydb")]
+        public string mydbConnectionString1 {
+            get {
+                return ((string)(this["mydbConnectionString1"]));
+            }
+        }
     }
 }

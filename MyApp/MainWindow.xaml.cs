@@ -130,7 +130,7 @@ namespace MyApp
                     }
                     catch(Exception ex)
                     {
-                        Console.WriteLine(ex.ToString());
+                        //Console.WriteLine(ex.ToString());
                     }
 
                     listViewTables.Items.Add(new MyItem2
@@ -147,7 +147,7 @@ namespace MyApp
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine(ex.ToString());
+                //Console.WriteLine(ex.ToString());
             }
         }
 

@@ -25,7 +25,8 @@ namespace MyApp
             public string name;
         }
 
-        List<Data> list = new List<Data>();
+        List<Data> list  = new List<Data>();
+        List<Data> list2 = new List<Data>();
 
         public bool   done;
         public string connStr;
@@ -69,52 +70,18 @@ namespace MyApp
             if (type == "Учебный план" && action == "Удалить")   EduPlanDelete();
         }
 
+        public bool checkString(string str)
+        {
+            foreach (char c in str)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(c.ToString(), "^[a-zA-Z]"))
+                {
+                    Console.Write(c);
+                    return false;
+                }
+            return true;
+        }
+
         public void ThemesAdd()
-        {
-
-        }
-
-        public void ThemesDelete()
-        {
-
-        }
-
-        public void SpecsAdd()
-        {
-
-        }
-
-        public void SpecsDelete()
-        {
-
-        }
-
-        public void StudentsAdd()
-        {
-
-        }
-
-        public void StudentsDelete()
-        {
-
-        }
-
-        public void GroupsAdd()
-        {
-
-        }
-
-        public void GroupsDelete()
-        {
-
-        }
-
-        public void SubjectsAdd()
-        {
-            
-        }
-
-        public void SubjectsDelete()
         {
             if (!done)
             {
@@ -140,6 +107,513 @@ namespace MyApp
                             Console.WriteLine(ex.ToString());
                         }
 
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                foreach (Data d in list)
+                    gThemesAddSubject.Items.Add(d.name);
+            }
+            else
+            {
+                bool error = false;
+                Console.WriteLine("checked string");
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    int id = 0;
+                    foreach (Data d in list)
+                        if (d.name == gThemesAddSubject.Text)
+                            id = d.id;
+
+                    conn.Open();
+                    string sql = "call add_themes('" + gThemesAddName.Text.ToString() +
+                                "','" + id + "')";
+                    Console.WriteLine(sql);
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteReader();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка добавления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show("Тема: " + gThemesAddName.Text + "\nуспешно добавлена!");
+            }
+        }
+
+        public void ThemesDelete()
+        {
+            // List<object> list = new List<object>();
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM subjects ORDER BY Id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    gThemesDeleteSubject.Items.Clear();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            /*list.Add(new {
+                                id =Convert.ToInt32(rdr[0].ToString()),
+                                name =rdr[1].ToString()
+                            }); */
+                            Console.WriteLine(it.id + it.name);
+                            gThemesDeleteSubject.Items.Add(it.name);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(
+                                "Произошла ошибка\n" 
+                                + ex.ToString());
+                        }
+                        list.Add(it);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                bool error = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    int id = 0;
+                    int idSubject = 0;
+                    foreach (Data d in list)
+                        if (d.name == gThemesDeleteSubject.Text)
+                            id = d.id;
+                    foreach (Data d in list2)
+                        if (d.name == gThemesDeleteName.Text)
+                            idSubject = d.id;
+
+                    conn.Open();
+                    string sql = "call rm_themes('" + idSubject +
+                                "','" + id + "')";
+                    Console.WriteLine(sql);
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteReader();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка удаления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error)
+                    MessageBox.Show("Тема: " + 
+                        gThemesAddName.Text + 
+                        "\nуспешно удалена!");
+            }
+        }
+
+        public void SpecsAdd()
+        {
+
+        }
+
+        public void SpecsDelete()
+        {
+
+        }
+
+        public void StudentsAdd()
+        {
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM groups ORDER BY Id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        gStudentAddGroup.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                int lastId = 0;
+                int id = 0;
+                bool error = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    foreach (Data d in list)
+                        if (d.name == gStudentAddGroup.Text)
+                            id = d.id;
+
+                    string sql = "SELECT max(id) FROM mydb.students WHERE groups_id = " + id;
+                    Console.WriteLine(sql);
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        MySqlDataReader rdr = cmd.ExecuteReader();
+                        rdr.Read();
+                        lastId = Convert.ToInt32(rdr[0].ToString());
+                        lastId++;
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка добавления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "call add_students('" +
+                        lastId + "','" + 
+                        gStudentAddSurname.Text + "','" + 
+                        id + "')";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    } catch(MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Произошла ошибка:\n" + ex.ToString());
+                    }
+
+                    if (!error) MessageBox.Show("Cтудент " + gStudentAddSurname.Text + " успешно добавлен!");
+                } finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public void StudentsDelete()
+        {
+            // gStudentDeleteGroup    - группа
+            // gStudentDeleteStudent  - студент
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM groups ORDER BY Id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        gStudentDeleteGroup.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                bool error = false;
+                int myId = 0, groupsId = 0;
+                foreach (Data d in list)
+                    if (d.name == gStudentDeleteGroup.Text)
+                        myId = d.id;
+                foreach (Data d in list2)
+                    if (d.name == gStudentDeleteStudent.Text)
+                        groupsId = d.id;
+
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = 
+                        "call rm_students('" +
+                        groupsId + "','" +
+                        myId     + "')";
+                    Console.WriteLine(sql);
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        cmd.ExecuteNonQuery();
+                    } catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Произошла ошибка:\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show(
+                    "Студент " + 
+                    gStudentDeleteStudent.Text + 
+                    " успешно удалён!");
+            }
+        }
+
+        public void GroupsAdd()
+        {
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT id, name FROM specs GROUP BY id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        try
+                        {
+                            Data it = new Data();
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                            //Console.WriteLine(it.id + it.name);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                foreach (Data d in list)
+                {
+                    gGroupAddSpec.Items.Add(d.name);
+                }
+            } else {
+                bool ok = checkString(gGroupAddName.Text.ToString());
+                bool duplicate = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    int id = 0;
+                    foreach (Data d in list)
+                        if (d.name == gGroupAddSpec.Text.ToString())
+                            id = d.id;
+                    conn.Open();
+                    string sql = "call add_groups(" +
+                        "'" + gGroupAddName.Text.ToString() + "'," +
+                        "'" + id.ToString() + "')";
+                    Console.WriteLine(sql);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    } catch (MySqlException ex)
+                    {
+                        duplicate = true;
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!duplicate)
+                    MessageBox.Show("Группа  " + gGroupAddName.Text + " успешно добавлена!");
+                else MessageBox.Show("Группа " + gGroupAddName.Text + " уже существует");
+            }
+        }
+
+        public void GroupsDelete()
+        {
+            if(!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT id, name FROM groups GROUP BY id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        try
+                        {
+                            Data it = new Data();
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                            //Console.WriteLine(it.id + it.name);
+                        }
+                        catch (Exception ex)
+                        {
+                            //Console.WriteLine(ex.ToString());
+                        }
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                foreach (Data d in list)
+                {
+                    gGroupDeleteGroup.Items.Add(d.name);
+                }
+            } else {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    int id = 0;
+                    foreach (Data d in list)
+                        if (d.name == gGroupDeleteGroup.Text.ToString())
+                            id = d.id;
+                    conn.Open();
+                    string sql = "call rm_groups('" + id + "')";
+                    Console.WriteLine(sql);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        //Console.WriteLine(ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                MessageBox.Show("Группа " + gGroupDeleteGroup.Text + " удалена");
+            }
+        }
+
+        public void SubjectsAdd()
+        {
+            if (done)
+            {
+                bool error = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "call add_subjects('" + gSubjectAddName.Text.ToString() + "')";
+                    Console.WriteLine(sql);
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteReader();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка добавления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show("Предмет: " + gThemesAddName.Text + "\nуспешно добавлен!");
+            }
+        }
+
+        public void SubjectsDelete()
+        {
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM subjects ORDER BY Id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        try
+                        {
+                            Data it = new Data();
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Произошла ошибка\n\n" + ex.ToString());
+                            //Console.WriteLine(ex.ToString());
+                        }
                     }
                     rdr.Close();
                 }
@@ -183,24 +657,118 @@ namespace MyApp
 
         }
 
-        private void ActionButton_Click(object sender, RoutedEventArgs e)
+        private void ActionButton_Click(object sender, RoutedEventArgs e) // все события 
         {
             done = true;
-            if (type == "Темы" && action == "Добавить") ThemesAdd();
-            if (type == "Темы" && action == "Удалить") ThemesDelete();
-            if (type == "Специальности" && action == "Добавить") SpecsAdd();
-            if (type == "Специальности" && action == "Удалить") SpecsDelete();
-            if (type == "Студенты" && action == "Добавить") StudentsAdd();
-            if (type == "Студенты" && action == "Удалить") StudentsDelete();
-            if (type == "Группы" && action == "Добавить") GroupsAdd();
-            if (type == "Группы" && action == "Удалить") GroupsDelete();
-            if (type == "Предметы" && action == "Добавить") SubjectsAdd();
-            if (type == "Предметы" && action == "Удалить") SubjectsDelete();
-            if (type == "Учебный план" && action == "Добавить") EduPlanAdd();
-            if (type == "Учебный план" && action == "Удалить") EduPlanDelete();
-
+            if (type == "Темы" && action == "Добавить")          ThemesAdd();      // +
+            if (type == "Темы" && action == "Удалить")           ThemesDelete();   // +
+            if (type == "Специальности" && action == "Добавить") SpecsAdd();       // -
+            if (type == "Специальности" && action == "Удалить")  SpecsDelete();    // -
+            if (type == "Студенты" && action == "Добавить")      StudentsAdd();    // +
+            if (type == "Студенты" && action == "Удалить")       StudentsDelete(); // -
+            if (type == "Группы" && action == "Добавить")        GroupsAdd();      // +
+            if (type == "Группы" && action == "Удалить")         GroupsDelete();   // +
+            if (type == "Предметы" && action == "Добавить")      SubjectsAdd();    // +
+            if (type == "Предметы" && action == "Удалить")       SubjectsDelete(); // +
+            if (type == "Учебный план" && action == "Добавить")  EduPlanAdd();     // -
+            if (type == "Учебный план" && action == "Удалить")   EduPlanDelete();  // -
+                                                                 // Занятые темы   // +
+                                                                 // Занятые темы   // +
             this.Hide();
             this.Close();
+        }
+
+        private void gThemesDeleteName_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                int myId = 0;
+                foreach (Data d in list)
+                {
+                    Console.WriteLine(d.id + " - " + d.name + "  ?  " + gThemesDeleteSubject.Text);
+                    if (gThemesDeleteSubject.Text == d.name)
+                    {
+                        Console.WriteLine("--> " + d.id + " - " + d.name);
+                        myId = d.id;
+                    }
+                }
+                conn.Open();
+                string sql = "SELECT Id, name FROM themes " +
+                             "WHERE subjects_id = " +
+                             myId + " ORDER BY Id";
+                Console.WriteLine(sql);
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                gThemesDeleteName.Items.Clear();
+                while (rdr.Read())
+                {
+                    try
+                    {
+                        Data it = new Data();
+                        it.id = Convert.ToInt32(rdr[0].ToString());
+                        it.name = rdr[1].ToString();
+                        list2.Add(it);
+                        gThemesDeleteName.Items.Add(it.name);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            "Произошла ошибка\n"
+                            + ex.ToString());
+                    }
+                }
+                rdr.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Произошла ошибка\n" + ex.ToString());
+            }
+        }
+
+        private void gStudentDeleteStudent_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            int groups_id = 0;
+            foreach (Data d in list)
+            {
+                Console.WriteLine(d.id + d.name);
+                if (d.name == gStudentDeleteGroup.Text)
+                    groups_id = d.id;
+            }
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "SELECT id, surname from students " +
+                    "where groups_id = '" + groups_id + 
+                    "' ORDER BY Id";
+                Console.WriteLine(sql);
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                gStudentDeleteStudent.Items.Clear();
+                while (rdr.Read())
+                {
+                    Data it = new Data();
+                    try
+                    {
+                        it.id = Convert.ToInt32(rdr[0].ToString());
+                        it.name = rdr[1].ToString();
+                        list2.Add(it);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                    gStudentDeleteStudent.Items.Add(it.name);
+                }
+                rdr.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }
