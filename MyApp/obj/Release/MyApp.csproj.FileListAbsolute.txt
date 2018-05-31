@@ -24,3 +24,4 @@ C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.csproj.CoreCompileInput
 C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.csproj.CopyComplete
 C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.exe
 C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.pdb
+C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.csprojAssemblyReference.cache
