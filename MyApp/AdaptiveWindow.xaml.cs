@@ -240,12 +240,105 @@ namespace MyApp
 
         public void SpecsAdd()
         {
+            if(done)
+            { 
+                bool error = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    string sql = "call add_specs('" +
+                        gSpecAddName.Text + "','" +
+                        gSpecAddCode.Text + "')";
+                    Console.WriteLine(sql);
+                    conn.Open();
 
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка добавления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show("Специальность " + gSpecAddName.Text + " успешно добавлена!");
+            }
         }
 
         public void SpecsDelete()
-        {
+        {   // gSpecDeleteName
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT id, name FROM specs ORDER BY id";
 
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        try
+                        {
+                            Data it = new Data();
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                foreach (Data d in list)
+                    gSpecDeleteName.Items.Add(d.name);
+            }
+            else
+            {
+                bool error = false;
+                int id = 0;
+                foreach (Data d in list)
+                    if (d.name == gSpecDeleteName.Text)
+                        id = d.id;
+
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    string sql = "call rm_specs('" + id + "')";
+                    Console.WriteLine(sql);
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка удаления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show("Специальность " + gSpecDeleteName.Text + " успешно добавлена!");
+            }
         }
 
         public void StudentsAdd()
@@ -584,7 +677,7 @@ namespace MyApp
                 {
                     conn.Close();
                 }
-                if (!error) MessageBox.Show("Предмет: " + gThemesAddName.Text + "\nуспешно добавлен!");
+                if (!error) MessageBox.Show("Предмет: " + gSubjectAddName.Text + "\nуспешно добавлен!");
             }
         }
 
@@ -649,12 +742,215 @@ namespace MyApp
 
         public void EduPlanAdd()
         {
+            // gEducationPlanAddSpec
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM specs ORDER BY Id";
 
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        gEducationPlanAddSpec.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM subjects ORDER BY Id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list2.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        gEducationPlanAddSubject.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                int specId = 0;
+                int subjectId = 0;
+                bool error = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {   // gEducationPlanAddSubject
+                    foreach (Data d in list)
+                        if (d.name == gEducationPlanAddSpec.Text)
+                            specId = d.id;
+                    foreach (Data d in list2)
+                        if (d.name == gEducationPlanAddSubject.Text)
+                            subjectId = d.id;
+
+                    string sql = "call add_edu_plan('" +
+                        gEducationPlanAddSemester.Text + "','" +
+                        gEducationPlanAddHours.Text + "','" +
+                        gEducationPlanAddYear.Text + "','" +
+                        specId + "','" +
+                        subjectId + "')";
+                    Console.WriteLine(sql);
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка добавления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show("Запись успешно добавлена!");
+            }
         }
 
         public void EduPlanDelete()
         {
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM specs ORDER BY Id";
 
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        gEducationPlanDeleteSpec.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT Id, name FROM subjects ORDER BY Id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list2.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        gEducationPlanDeleteSubject.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                int specId = 0;
+                int subjectId = 0;
+                bool error = false;
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {   // gEducationPlanAddSubject
+                    foreach (Data d in list)
+                        if (d.name == gEducationPlanDeleteSpec.Text)
+                            specId = d.id;
+                    foreach (Data d in list2)
+                        if (d.name == gEducationPlanDeleteSubject.Text)
+                            subjectId = d.id;
+
+                    string sql = "call rm_edu_plan('" +
+                        gEducationPlanDeleteSemester.Text + "','" +
+                        //gEducationPlanDeleteHours.Text + "','" +
+                        gEducationPlanDeleteYear.Text + "','" +
+                        specId + "','" +
+                        subjectId + "')";
+                    Console.WriteLine(sql);
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        error = true;
+                        MessageBox.Show("Ошибка удаления\n" + ex.ToString());
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                if (!error) MessageBox.Show("Запись успешно удалена!");
+            }
         }
 
         private void ActionButton_Click(object sender, RoutedEventArgs e) // все события 
@@ -662,16 +958,16 @@ namespace MyApp
             done = true;
             if (type == "Темы" && action == "Добавить")          ThemesAdd();      // +
             if (type == "Темы" && action == "Удалить")           ThemesDelete();   // +
-            if (type == "Специальности" && action == "Добавить") SpecsAdd();       // -
-            if (type == "Специальности" && action == "Удалить")  SpecsDelete();    // -
+            if (type == "Специальности" && action == "Добавить") SpecsAdd();       // +
+            if (type == "Специальности" && action == "Удалить")  SpecsDelete();    // +
             if (type == "Студенты" && action == "Добавить")      StudentsAdd();    // +
-            if (type == "Студенты" && action == "Удалить")       StudentsDelete(); // -
+            if (type == "Студенты" && action == "Удалить")       StudentsDelete(); // +
             if (type == "Группы" && action == "Добавить")        GroupsAdd();      // +
             if (type == "Группы" && action == "Удалить")         GroupsDelete();   // +
             if (type == "Предметы" && action == "Добавить")      SubjectsAdd();    // +
             if (type == "Предметы" && action == "Удалить")       SubjectsDelete(); // +
-            if (type == "Учебный план" && action == "Добавить")  EduPlanAdd();     // -
-            if (type == "Учебный план" && action == "Удалить")   EduPlanDelete();  // -
+            if (type == "Учебный план" && action == "Добавить")  EduPlanAdd();     // +
+            if (type == "Учебный план" && action == "Удалить")   EduPlanDelete();  // +
                                                                  // Занятые темы   // +
                                                                  // Занятые темы   // +
             this.Hide();

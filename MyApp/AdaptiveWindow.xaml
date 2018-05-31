@@ -13,27 +13,25 @@
             <Label Content="Номер семестра" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
             <TextBox Name="gEducationPlanAddSemester" HorizontalAlignment="Left" Height="23" Margin="106,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
             <Label Content="Кол-во часов" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top"/>
-            <TextBox Name="gEducationPlanAddHours" HorizontalAlignment="Left" Height="23" Margin="106,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
+            <TextBox Name="gEducationPlanAddHours" HorizontalAlignment="Left" Height="23" Margin="106,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48" FontSize="16"/>
             <Label Content="Год" HorizontalAlignment="Left" Margin="151,10,0,0" VerticalAlignment="Top"/>
-            <TextBox Name="gEducationPlanAddYear" HorizontalAlignment="Left" Height="23" Margin="185,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" FontSize="16"/>
+            <TextBox Name="gEducationPlanAddYear" HorizontalAlignment="Left" Height="23" Margin="185,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" FontSize="16"/>
             <Label Content="Специальность" HorizontalAlignment="Left" Margin="0,72,0,0" VerticalAlignment="Top"/>
             <Label Content="Предмет" HorizontalAlignment="Left" Margin="0,103,0,0" VerticalAlignment="Top"/>
-            <ComboBox Name="gEducationPlanAddSpec" HorizontalAlignment="Left" Margin="106,75,0,0" VerticalAlignment="Top" Width="170" FontSize="16"/>
-            <ComboBox Name="gEducationPlanAddSubject" HorizontalAlignment="Left" Margin="106,106,0,0" VerticalAlignment="Top" Width="170" FontSize="16"/>
+            <ComboBox Name="gEducationPlanAddSpec" HorizontalAlignment="Left" Margin="106,75,0,0" VerticalAlignment="Top" Width="170" FontSize="14" Height="26"/>
+            <ComboBox Name="gEducationPlanAddSubject" HorizontalAlignment="Left" Margin="106,106,0,0" VerticalAlignment="Top" Width="170" FontSize="14" Height="25"/>
         </Grid>
 
         <!-- gEducationPlanDelete -->
         <Grid Name="gEducationPlanDelete" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
             <Label Content="Номер семестра" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
             <TextBox Name="gEducationPlanDeleteSemester" HorizontalAlignment="Left" Height="23" Margin="106,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
-            <Label Content="Кол-во часов" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top"/>
-            <TextBox Name="gEducationPlanDeleteHours" HorizontalAlignment="Left" Height="23" Margin="106,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="40" FontSize="16"/>
             <Label Content="Год" HorizontalAlignment="Left" Margin="151,10,0,0" VerticalAlignment="Top"/>
-            <TextBox Name="gEducationPlanDeleteYear" HorizontalAlignment="Left" Height="23" Margin="185,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" FontSize="16"/>
-            <Label Content="Специальность" HorizontalAlignment="Left" Margin="0,72,0,0" VerticalAlignment="Top"/>
-            <Label Content="Предмет" HorizontalAlignment="Left" Margin="0,103,0,0" VerticalAlignment="Top"/>
-            <ComboBox Name="gEducationPlanDeleteSpec" HorizontalAlignment="Left" Margin="106,75,0,0" VerticalAlignment="Top" Width="170" FontSize="16" Height="23"/>
-            <ComboBox Name="gEducationPlanDeleteSubject" HorizontalAlignment="Left" Margin="106,107,0,0" VerticalAlignment="Top" Width="170" FontSize="16" Height="23"/>
+            <TextBox Name="gEducationPlanDeleteYear" HorizontalAlignment="Left" Height="23" Margin="185,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" FontSize="16"/>
+            <Label Content="Специальность" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top"/>
+            <Label Content="Предмет" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top"/>
+            <ComboBox Name="gEducationPlanDeleteSpec" HorizontalAlignment="Left" Margin="106,47,0,0" VerticalAlignment="Top" Width="170" FontSize="14" Height="23"/>
+            <ComboBox Name="gEducationPlanDeleteSubject" HorizontalAlignment="Left" Margin="106,79,0,0" VerticalAlignment="Top" Width="170" FontSize="14" Height="23"/>
         </Grid>
 
         <!-- gThemesAdd -->
