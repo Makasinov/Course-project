@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyApp"
-        mc:Ignorable="d" Height="290" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="Параметры" ShowInTaskbar="False">
+        mc:Ignorable="d" Height="316.6" Width="312" WindowStyle="ToolWindow" Opacity="0.8" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="Параметры" ShowInTaskbar="False">
     <Grid>
-        <Button x:Name="Accept" Content="Применить" Margin="106,218,105.6,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
+        <Button x:Name="Accept" Content="Применить" Margin="106,257,105.6,0" VerticalAlignment="Top" Height="27" FontSize="16" Click="Button_Click"/>
         <GroupBox Header="Параметры темы" HorizontalAlignment="Left" Height="108" Margin="10,0,0,0" VerticalAlignment="Top" Width="286">
             <Grid Margin="3,10,4.4,4.6">
                 <Grid Margin="0,38,0,0" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
@@ -20,7 +20,7 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox Header="Параметры студента" HorizontalAlignment="Left" Height="105" Margin="10,108,0,0" VerticalAlignment="Top" Width="286">
+        <GroupBox Header="Параметры студента" HorizontalAlignment="Left" Height="134" Margin="10,108,0,0" VerticalAlignment="Top" Width="286">
             <Grid Margin="4,5,3.4,2.4">
                 <Grid Margin="0,38,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="267">
                     <Label Content="Студент" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
@@ -30,6 +30,15 @@
                     <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80"/>
                     <ComboBox x:Name="Groups" HorizontalAlignment="Left" Margin="85,5,0,0" VerticalAlignment="Top" Width="182" Height="27" FontSize="14" SelectionChanged="Groups_SelectionChanged"/>
                 </Grid>
+                <ComboBox x:Name="Mark" HorizontalAlignment="Left" Margin="85,75,0,0" VerticalAlignment="Top" Width="44" Height="27" FontSize="16">
+                    <ComboBoxItem Content="5"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="0" IsSelected="True"/>
+                </ComboBox>
+                <Label Content="Оценка" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Width="80" Margin="0,70,0,0"/>
             </Grid>
         </GroupBox>
 

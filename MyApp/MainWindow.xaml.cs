@@ -25,11 +25,13 @@ namespace MyApp
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
         TablesAddForm tablesAddForm;
+
         public class Data
         {
             public int id;
             public string login;
         }
+
         List<Data> idLogin = new List<Data>();
         
         public MainWindow()
@@ -73,20 +75,24 @@ namespace MyApp
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            distribute.Visibility = Visibility.Hidden;
             if ( common.nRole == "Admin" || common.nRole == "root" || 
                  common.nRole == "Teacher" || common.nRole == "Depot" )
             {
                 ButtonAdd.IsEnabled = true;
                 ButtonDelete.IsEnabled = true;
+                distribute.IsEnabled = true;
             }
-            Console.WriteLine(comboBoxTable.SelectedIndex);
+            //Console.WriteLine(comboBoxTable.SelectedIndex);
             string req = "";
             switch(comboBoxTable.SelectedIndex)
             {
                 case 0:
                     req = "edu_plan"; break;
                 case 1:
-                    req = "engaged_themes"; break;
+                    req = "engaged_themes";
+                    distribute.Visibility = Visibility.Visible;
+                    break;
                 case 2:
                     req = "groups"; break;
                 case 3:
@@ -102,22 +108,18 @@ namespace MyApp
             string connStr = connectionString.Text +
                     "user id=" + common.username +
                     ";password=" + common.password;
-            Console.WriteLine(connStr);
+            //Console.WriteLine(connStr);
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
                 Console.WriteLine("Попытка подключения...");
                 conn.Open();
                 string sql = "call show_" + req;
-                Console.WriteLine(sql);
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                //Console.WriteLine(sql);
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 listViewTables.Items.Clear();
-                string s1 = "";
-                string s2 = "";
-                string s3 = "";
-                string s4 = "";
-                string s5 = "";
+                string s1 = "", s2 = "", s3 = "", s4 = "", s5 = "";
                 while (rdr.Read())
                 {
                     try
@@ -135,10 +137,8 @@ namespace MyApp
 
                     listViewTables.Items.Add(new MyItem2
                     {
-                        Col1 = s1,
-                        Col2 = s2,
-                        Col3 = s3,
-                        Col4 = s4,
+                        Col1 = s1, Col2 = s2,
+                        Col3 = s3, Col4 = s4,
                         Col5 = s5
                     });
                 }
@@ -226,12 +226,12 @@ namespace MyApp
             public string Gender { get; set; }
         }
 
-        public void setParams(string connStr)
+        private void setParams(string connStr)
         {
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
-                Console.WriteLine("Попытка подключения...");
+                //Console.WriteLine("Попытка подключения...");
                 conn.Open();
                 string sql = "getmyinfo('" + common.username + "')";
                 MySqlCommand cmd    = new MySqlCommand(sql, conn);
@@ -253,7 +253,7 @@ namespace MyApp
                     Console.WriteLine("Пусто");
                 }
                 rdr.Close();
-                Console.WriteLine(name);
+                //Console.WriteLine(name);
                 Name_Copy.Content     = name;
                 Surname_Copy.Content  = surname;
                 Surname_Copy1.Content = role;
@@ -271,8 +271,8 @@ namespace MyApp
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.ToString());
-                        Console.WriteLine(Avatar.Source.ToString());
+                        //Console.WriteLine(ex.ToString());
+                        //Console.WriteLine(Avatar.Source.ToString());
                     }
                 else if (gender == "Female")
                     try
@@ -284,8 +284,8 @@ namespace MyApp
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.ToString());
-                        Console.WriteLine(Avatar.Source.ToString());
+                        //Console.WriteLine(ex.ToString());
+                        //Console.WriteLine(Avatar.Source.ToString());
                     }
                 else try
                     {
@@ -296,8 +296,8 @@ namespace MyApp
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.ToString());
-                        Console.WriteLine(Avatar.Source.ToString());
+                       // Console.WriteLine(ex.ToString());
+                       // Console.WriteLine(Avatar.Source.ToString());
                     }
 
                 if (common.nRole == "Admin" || common.nRole == "root")
@@ -342,11 +342,11 @@ namespace MyApp
                 }
             } catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+               // Console.WriteLine(ex.ToString());
             }
         }
 
-        public void setUsersTable(string connStr)
+        private void setUsersTable(string connStr)
         {
             //Console.WriteLine("wannaToCreate" + common.username + "\t" + common.password);
             MySqlConnection conn = new MySqlConnection(connStr);
@@ -382,7 +382,7 @@ namespace MyApp
             }
         }
 
-        public void addNewTheme(string connStr)
+        private void addNewTheme(string connStr)
         {
 
         }
@@ -501,6 +501,11 @@ namespace MyApp
         private void comboBoxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
+        }
+
+        private void distribute_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

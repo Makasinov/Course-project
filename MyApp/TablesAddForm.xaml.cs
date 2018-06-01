@@ -127,7 +127,6 @@ namespace MyApp
                     if (l.name == Groups.SelectedValue.ToString())
                         groupId = l.id;
                      
-
                 foreach (myList l in students)
                     if (l.name == Students.SelectedValue.ToString())
                         studentId = l.id;
@@ -143,9 +142,10 @@ namespace MyApp
                         sql = "call rm_engaged_themes(";
 
                     sql += studentId + "," +
-                        +groupId + "," +
-                        +themeId + "," +
-                        +subjectId + ")";
+                        + groupId + "," +
+                        + themeId + "," +
+                        + subjectId + "," +
+                          Mark.Text + ")";
                     Console.WriteLine(sql);
                     bool ok = true;
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
