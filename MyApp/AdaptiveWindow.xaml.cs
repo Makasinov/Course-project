@@ -396,7 +396,13 @@ namespace MyApp
                     {
                         MySqlDataReader rdr = cmd.ExecuteReader();
                         rdr.Read();
-                        lastId = Convert.ToInt32(rdr[0].ToString());
+                        try
+                        {
+                            lastId = Convert.ToInt32(rdr[0].ToString());
+                        } catch (Exception ex)
+                        {
+                            //Console.WriteLine(ex.ToString());
+                        }
                         lastId++;
                     }
                     catch (MySqlException ex)

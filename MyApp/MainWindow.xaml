@@ -47,7 +47,7 @@
         </Grid>
         <Grid Name="MainGrid" Margin="175,29,-3.8,-3" Background="#FFBFBFBF" MouseLeftButtonDown="MainGrid_MouseLeftButtonDown">
             <!-- gTables -->
-            <Grid Name="gTables" Visibility="Visible" Margin="10">
+            <Grid Name="gTables" Visibility="Hidden" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>

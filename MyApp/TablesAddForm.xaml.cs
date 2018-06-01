@@ -108,51 +108,29 @@ namespace MyApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            bool error = false;
             if (Subjects.SelectedValue != null &&
                 Themes.SelectedValue   != null &&
                 Groups.SelectedValue   != null &&
                 Students.SelectedValue != null)
-            {
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
+            { 
 
-                foreach (myList l in subjects) Console.WriteLine(" subject " + l.name);
-                //Console.WriteLine("selected: " + Subjects.SelectedValue.ToString());
                 foreach (myList l in subjects)
                     if (l.name == Subjects.SelectedValue.ToString())
-                    {
                         subjectId = l.id;
-                        Console.WriteLine(l.id + " " + l.name);
-                    }
 
-                foreach (myList l in themes)   Console.WriteLine(" theme " + l.name);
-                //Console.WriteLine("selected: " + Themes.SelectedValue.ToString());
                 foreach (myList l in themes)
                     if (l.name == Themes.SelectedValue.ToString())
-                    {
                         themeId = l.id;
-                        Console.WriteLine(l.id + " " + l.name);
-                    }
-
-                foreach (myList l in groups)   Console.WriteLine(" group " + l.name);
-                //Console.WriteLine("selected: " + Groups.SelectedValue.ToString());
+                
                 foreach (myList l in groups)
                     if (l.name == Groups.SelectedValue.ToString())
-                    {
                         groupId = l.id;
-                        Console.WriteLine(l.id + " " + l.name);
-                    }
+                     
 
-                foreach (myList l in students) Console.WriteLine(" student " + l.name);
-                //Console.WriteLine("selected: " + Students.SelectedValue.ToString());
                 foreach (myList l in students)
                     if (l.name == Students.SelectedValue.ToString())
-                    {
                         studentId = l.id;
-                        Console.WriteLine(l.id + " " + l.name);
-                    }
-
                 
                 MySqlConnection conn = new MySqlConnection(myConnStr);
                 try
@@ -184,6 +162,7 @@ namespace MyApp
                             MessageBox.Show("Ошибка\nВозможно у данного студента уже есть тема");
                         else if (action == "delete")
                             MessageBox.Show("Ошибка\nВозможно у данного студента нет темы");
+                        error = true;
                     }
                     conn.Close();
                     if (ok)
@@ -201,7 +180,9 @@ namespace MyApp
             else
             {
                 MessageBox.Show("Некоторые поля не заполнены");
+                error = true;
             }
+            if (!error) MessageBox.Show("Операция успешно завершена!"); 
         }
 
         private void Groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
