@@ -28,6 +28,7 @@ namespace MyApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string DEBUG_CONNSTR = "server=localhost;persistsecurityinfo=True;database=mydb;allowuservariables=True;SslMode=none;user id = root; password = root";
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
         TablesAddForm tablesAddForm;
@@ -533,43 +534,307 @@ namespace MyApp
                 gfx.DrawLine(XPens.Black, 25, i, page.Width - 25, i);
         }
 
-        private void drawThemes(PdfPage page)
+        private void drawThemes(PdfPage page) // Темы 
         {
             XGraphics gfx = XGraphics.FromPdfPage(page);
             drawTable(gfx, page);
             gfx.DrawString("Themes", titleFont, XBrushes.Black,
                 new XRect(50, 10, page.Width, 100),
               XStringFormats.TopLeft);
-            drawLines(gfx, page, 100,200);
+            drawLines(gfx, page, 300);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_Themes()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while( rdr.Read() )
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                        new XRect(x + 276, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
-        private void drawEducationPlan(PdfPage page)
+        private void drawEducationPlan(PdfPage page) // Учебный план 
         {
             XGraphics gfx = XGraphics.FromPdfPage(page);
             drawTable(gfx, page);
             gfx.DrawString("Education Plan", titleFont, XBrushes.Black,
                 new XRect(50, 10, page.Width, 100),
               XStringFormats.TopLeft);
-            drawLines(gfx, page, 50);
+            drawLines(gfx, page, 50,70,100,350);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_edu_plan()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while (rdr.Read())
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                        new XRect(x + 27, y, 250, 0));
+                    gfx.DrawString(rdr[2].ToString(), font, XBrushes.Black,
+                        new XRect(x + 46, y, 250, 0));
+                    gfx.DrawString(rdr[3].ToString(), font, XBrushes.Black,
+                        new XRect(x + 75, y, 250, 0));
+                    gfx.DrawString(rdr[4].ToString(), font, XBrushes.Black,
+                        new XRect(x + 326, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void drawEngagedThemes(PdfPage page) // Занятые темы 
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Engaged Themes", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            drawLines(gfx, page, 60,150,300,550);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_engaged_themes()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while (rdr.Read())
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                        new XRect(x + 36, y, 250, 0));
+                    gfx.DrawString(rdr[2].ToString(), font, XBrushes.Black,
+                        new XRect(x + 125, y, 250, 0));
+                    gfx.DrawString(rdr[3].ToString(), font, XBrushes.Black,
+                        new XRect(x + 275, y, 250, 0));
+                    gfx.DrawString(rdr[4].ToString(), font, XBrushes.Black,
+                        new XRect(x + 530, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void drawGroups(PdfPage page) // Группы 
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Groups", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            drawLines(gfx, page, 60);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_groups()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while (rdr.Read())
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                        new XRect(x + 36, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void drawStudents(PdfPage page) // Студенты 
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Students", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            drawLines(gfx, page, 60);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_students()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while (rdr.Read())
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                        new XRect(x + 36, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void drawSubjects(PdfPage page) // Предметы 
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Subjects", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            //drawLines(gfx, page, 50);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_subjects()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while (rdr.Read())
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void drawSpecs(PdfPage page) // Специальности 
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Specialties", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            drawLines(gfx, page, 420);
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call show_specs()";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                int y = 60, x = 26;
+                while (rdr.Read())
+                {
+                    gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                        new XRect(x, y, 250, 0));
+                    gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                        new XRect(x + 400, y, 250, 0));
+                    y += 15;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            // Create a new PDF document
-            PdfDocument document = new PdfDocument();
-            document.Info.Title = "Report";
+            bool error = false;
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
 
-            // Create an empty page
-            PdfPage page = document.AddPage();
-            drawThemes(page);
-            page = document.AddPage();
-            drawEducationPlan(page);
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                conn.Close();
+            }
+            catch(MySqlException ex)
+            {
+                error = true;
+                MessageBox.Show("Ошибка подключения.\nВозможно вы не авторизованы.");
+            }
+            if (!error)
+            {
+                // Create a new PDF document
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = "Report";
 
-            // Save the document...
-            const string filename = "Report.pdf";
-            document.Save(filename);
-            // ...and start a viewer.
-            Process.Start(filename);
+                // Create an empty page
+                PdfPage page = document.AddPage();
+                drawThemes(page);
+                page = document.AddPage();
+                drawEducationPlan(page);
+                page = document.AddPage();
+                drawEngagedThemes(page);
+                page = document.AddPage();
+                drawGroups(page);
+                page = document.AddPage();
+                drawStudents(page);
+                page = document.AddPage();
+                drawSubjects(page);
+                page = document.AddPage();
+                drawSpecs(page);
+
+                // Save the document...
+                const string filename = "Report.pdf";
+                document.Save(filename);
+                // ...and start a viewer.
+                Process.Start(filename);
+            }
         }
     }
 }
