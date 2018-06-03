@@ -25,3 +25,9 @@ C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\TablesAddForm.g.cs
 C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\TablesAddForm.baml
 C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\AdaptiveWindow.g.cs
 C:\Users\User\source\repos\MyApp\MyApp\obj\Debug\AdaptiveWindow.baml
+C:\Users\User\source\repos\MyApp\MyApp\bin\Debug\PdfSharp.Charting.dll
+C:\Users\User\source\repos\MyApp\MyApp\bin\Debug\PdfSharp.dll
+C:\Users\User\source\repos\MyApp\MyApp\bin\Debug\PdfSharp.xml
+C:\Users\User\source\repos\MyApp\MyApp\bin\Debug\PdfSharp.Charting.xml
+C:\Users\User\source\repos\MyApp\MyApp\bin\Debug\de\PdfSharp.resources.dll
+C:\Users\User\source\repos\MyApp\MyApp\bin\Debug\de\PdfSharp.Charting.resources.dll

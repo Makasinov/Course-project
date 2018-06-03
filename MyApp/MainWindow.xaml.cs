@@ -14,6 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
+using System.IO;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
 
 namespace MyApp
 {
@@ -25,6 +31,9 @@ namespace MyApp
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
         TablesAddForm tablesAddForm;
+        XFont titleFont = new XFont("Impact", 25);
+        XFont font = new XFont("Times New Roman", 10);
+        //XBrush brush = new XBrush();
 
         public class Data
         {
@@ -506,6 +515,61 @@ namespace MyApp
         private void distribute_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void drawLines(XGraphics gfx, PdfPage page, int w1 = -1, int w2 = -1, int w3 = -1, int w4 = -1, int w5 = -1)
+        {
+            gfx.DrawLine(XPens.Black, w1, 50, w1, page.Height - 55);
+            gfx.DrawLine(XPens.Black, w2, 50, w2, page.Height - 55);
+            gfx.DrawLine(XPens.Black, w3, 50, w3, page.Height - 55);
+            gfx.DrawLine(XPens.Black, w4, 50, w4, page.Height - 55);
+            gfx.DrawLine(XPens.Black, w5, 50, w5, page.Height - 55);
+        }
+
+        private void drawTable(XGraphics gfx, PdfPage page)
+        {
+            gfx.DrawRectangle(XPens.Black, new XRect(25, 50, page.Width - 50, page.Height - 105));
+            for (int i = 50; i < page.Height - 70; i += 15)
+                gfx.DrawLine(XPens.Black, 25, i, page.Width - 25, i);
+        }
+
+        private void drawThemes(PdfPage page)
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Themes", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            drawLines(gfx, page, 100,200);
+        }
+
+        private void drawEducationPlan(PdfPage page)
+        {
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            gfx.DrawString("Education Plan", titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+            drawLines(gfx, page, 50);
+        }
+
+        private void Report_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a new PDF document
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = "Report";
+
+            // Create an empty page
+            PdfPage page = document.AddPage();
+            drawThemes(page);
+            page = document.AddPage();
+            drawEducationPlan(page);
+
+            // Save the document...
+            const string filename = "Report.pdf";
+            document.Save(filename);
+            // ...and start a viewer.
+            Process.Start(filename);
         }
     }
 }

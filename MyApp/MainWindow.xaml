@@ -32,7 +32,7 @@
                     <GradientStop Color="#FFBFBFBF"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Grid Margin="0,172,0,173">
+            <Grid Margin="0,172,0,118">
                 <Button Name="Tables" Content="Таблицы" Margin="0,40,51.2,0" VerticalAlignment="Top" Background="{x:Null}" Click="Button_Click_1" BorderBrush="{x:Null}" FontFamily="Yu Gothic UI Light" FontSize="22" HorizontalAlignment="Right" Width="92"/>
                 <Button Name="Users" Content="Пользователи" Margin="0,79,0.2,0" VerticalAlignment="Top" Background="{x:Null}" Click="Users_Click" BorderBrush="{x:Null}" FontSize="22" FontFamily="Yu Gothic UI Light" HorizontalAlignment="Right" Width="143"/>
                 <Button Name="Settings" Content="Настройки" Margin="0,118,30.2,0" VerticalAlignment="Top" Background="{x:Null}" Click="Settings_Click" BorderBrush="{x:Null}" FontSize="22" FontFamily="Yu Gothic UI Light" HorizontalAlignment="Right" Width="113" Height="35"/>
@@ -42,6 +42,8 @@
                 <Image Height="24" Margin="0,50,148.2,0" VerticalAlignment="Top" Source="icons/table.png" HorizontalAlignment="Right" Width="24"/>
                 <Image Height="25" Margin="0,10,148.2,0" VerticalAlignment="Top" Source="icons/home.png" HorizontalAlignment="Right" Width="24"/>
                 <Button x:Name="Home_Copy" Content="Войти" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="Times New Roman" FontSize="24" Margin="7,-40,4.2,0" FontStyle="Italic" Click="Home_Copy_Click"/>
+                <Button x:Name="Report" Content="Отчёт" Margin="0,158,73,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="22" FontFamily="Yu Gothic UI Light" HorizontalAlignment="Right" Width="70" Height="35" Click="Report_Click"/>
+                <Image HorizontalAlignment="Right" Height="32" Margin="0,161,144,0" VerticalAlignment="Top" Width="32" Source="icons/doc.png"/>
             </Grid>
             <Image Name="Avatar" Height="100" Margin="38,10,40,0" VerticalAlignment="Top" Source="icons/user.png" MouseEnter="Image_MouseEnter_1" MouseLeave="Image_MouseLeave_1" MouseLeftButtonDown="Avatar_MouseLeftButtonDown_1"/>
         </Grid>
