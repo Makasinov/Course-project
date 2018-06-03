@@ -28,7 +28,7 @@ namespace MyApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string DEBUG_CONNSTR = "server=localhost;persistsecurityinfo=True;database=mydb;allowuservariables=True;SslMode=none;user id = root; password = root";
+        //private const string DEBUG_CONNSTR = "server=localhost;persistsecurityinfo=True;database=mydb;allowuservariables=True;SslMode=none;user id = root; password = root";
         MyApp.Window1 win = new MyApp.Window1();
         addForm form = new addForm();
         TablesAddForm tablesAddForm;
@@ -515,7 +515,11 @@ namespace MyApp
 
         private void distribute_Click(object sender, RoutedEventArgs e)
         {
-
+            string connStr = connectionString.Text +
+                    "user id=" + common.username +
+                    ";password=" + common.password;
+            AdaptiveWindow AW = new AdaptiveWindow(connStr, "Распределить", "Применить");
+            AW.Show();
         }
 
         private void drawLines(XGraphics gfx, PdfPage page, int w1 = -1, int w2 = -1, int w3 = -1, int w4 = -1, int w5 = -1)
@@ -789,7 +793,7 @@ namespace MyApp
             }
         }
 
-        private void Report_Click(object sender, RoutedEventArgs e)
+        private void Report_Click(object sender, RoutedEventArgs e) 
         {
             bool error = false;
             string connStr = connectionString.Text +

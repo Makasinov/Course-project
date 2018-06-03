@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MyApp"
         mc:Ignorable="d" Height="290" Width="312" Opacity="0.8" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Name="ActionButton" Content="" Margin="110,220,107.6,0" VerticalAlignment="Top" FontSize="16" Click="ActionButton_Click"/>
+        <Button Name="ActionButton" Content="" Margin="104,220,105,0" VerticalAlignment="Top" FontSize="16" Click="ActionButton_Click"/>
 
         <!-- gEducationPlanAdd -->
         <Grid Name="gEducationPlanAdd" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
@@ -123,6 +123,16 @@
             <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
                 <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
                 <ComboBox Name="gSubjectDeleteSubject" HorizontalAlignment="Left" Margin="75,7,0,0" VerticalAlignment="Top" Width="187" FontSize="16"/>
+            </Grid>
+        </Grid>
+
+        <!-- gAuto -->
+        <Grid Name="gAuto" Visibility="Hidden" HorizontalAlignment="Left" Height="205" Margin="10,10,0,0" VerticalAlignment="Top" Width="286">
+            <Grid Margin="4,10,10,0" Height="185" VerticalAlignment="Top">
+                <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
+                <ComboBox Name="gAutoGroups" HorizontalAlignment="Left" Margin="75,4,0,0" VerticalAlignment="Top" Width="187" FontSize="16"/>
+                <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="0,32,0,0"/>
+                <ComboBox x:Name="gAutoSubject" HorizontalAlignment="Left" Margin="75,36,0,0" VerticalAlignment="Top" Width="187" FontSize="16"/>
             </Grid>
         </Grid>
 

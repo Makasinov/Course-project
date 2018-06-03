@@ -25,10 +25,10 @@ namespace MyApp
             public string name;
         }
 
-        List<Data> list  = new List<Data>();
+        List<Data> list = new List<Data>();
         List<Data> list2 = new List<Data>();
 
-        public bool   done;
+        public bool done;
         public string connStr;
         public string type;
         public string action;
@@ -43,31 +43,33 @@ namespace MyApp
             this.type = type;
             this.action = action;
             ActionButton.Content = action;
-            if (type == "Темы" && action == "Добавить")          gThemesAdd.Visibility           = Visibility.Visible;
-            if (type == "Темы" && action == "Удалить")           gThemesDelete.Visibility        = Visibility.Visible;
-            if (type == "Специальности" && action == "Добавить") gSpecAdd.Visibility             = Visibility.Visible;
-            if (type == "Специальности" && action == "Удалить")  gSpecDelete.Visibility          = Visibility.Visible;
-            if (type == "Студенты" && action == "Добавить")      gStudentAdd.Visibility          = Visibility.Visible;
-            if (type == "Студенты" && action == "Удалить")       gStudentDelete.Visibility       = Visibility.Visible;
-            if (type == "Группы" && action == "Добавить")        gGroupAdd.Visibility            = Visibility.Visible;
-            if (type == "Группы" && action == "Удалить")         gGroupDelete.Visibility         = Visibility.Visible;
-            if (type == "Предметы" && action == "Добавить")      gSubjectAdd.Visibility          = Visibility.Visible;
-            if (type == "Предметы" && action == "Удалить")       gSubjectDelete.Visibility       = Visibility.Visible;
-            if (type == "Учебный план" && action == "Добавить")  gEducationPlanAdd.Visibility    = Visibility.Visible;
-            if (type == "Учебный план" && action == "Удалить")   gEducationPlanDelete.Visibility = Visibility.Visible;
+            if (type == "Распределить") gAuto.Visibility = Visibility.Visible;
+            if (type == "Темы" && action == "Добавить") gThemesAdd.Visibility = Visibility.Visible;
+            if (type == "Темы" && action == "Удалить") gThemesDelete.Visibility = Visibility.Visible;
+            if (type == "Специальности" && action == "Добавить") gSpecAdd.Visibility = Visibility.Visible;
+            if (type == "Специальности" && action == "Удалить") gSpecDelete.Visibility = Visibility.Visible;
+            if (type == "Студенты" && action == "Добавить") gStudentAdd.Visibility = Visibility.Visible;
+            if (type == "Студенты" && action == "Удалить") gStudentDelete.Visibility = Visibility.Visible;
+            if (type == "Группы" && action == "Добавить") gGroupAdd.Visibility = Visibility.Visible;
+            if (type == "Группы" && action == "Удалить") gGroupDelete.Visibility = Visibility.Visible;
+            if (type == "Предметы" && action == "Добавить") gSubjectAdd.Visibility = Visibility.Visible;
+            if (type == "Предметы" && action == "Удалить") gSubjectDelete.Visibility = Visibility.Visible;
+            if (type == "Учебный план" && action == "Добавить") gEducationPlanAdd.Visibility = Visibility.Visible;
+            if (type == "Учебный план" && action == "Удалить") gEducationPlanDelete.Visibility = Visibility.Visible;
 
-            if (type == "Темы" && action == "Добавить")          ThemesAdd();
-            if (type == "Темы" && action == "Удалить")           ThemesDelete();
+            if (type == "Распределить") DistributeThemes();
+            if (type == "Темы" && action == "Добавить") ThemesAdd();
+            if (type == "Темы" && action == "Удалить") ThemesDelete();
             if (type == "Специальности" && action == "Добавить") SpecsAdd();
-            if (type == "Специальности" && action == "Удалить")  SpecsDelete();
-            if (type == "Студенты" && action == "Добавить")      StudentsAdd();
-            if (type == "Студенты" && action == "Удалить")       StudentsDelete();
-            if (type == "Группы" && action == "Добавить")        GroupsAdd();
-            if (type == "Группы" && action == "Удалить")         GroupsDelete();
-            if (type == "Предметы" && action == "Добавить")      SubjectsAdd();
-            if (type == "Предметы" && action == "Удалить")       SubjectsDelete();
-            if (type == "Учебный план" && action == "Добавить")  EduPlanAdd();
-            if (type == "Учебный план" && action == "Удалить")   EduPlanDelete();
+            if (type == "Специальности" && action == "Удалить") SpecsDelete();
+            if (type == "Студенты" && action == "Добавить") StudentsAdd();
+            if (type == "Студенты" && action == "Удалить") StudentsDelete();
+            if (type == "Группы" && action == "Добавить") GroupsAdd();
+            if (type == "Группы" && action == "Удалить") GroupsDelete();
+            if (type == "Предметы" && action == "Добавить") SubjectsAdd();
+            if (type == "Предметы" && action == "Удалить") SubjectsDelete();
+            if (type == "Учебный план" && action == "Добавить") EduPlanAdd();
+            if (type == "Учебный план" && action == "Удалить") EduPlanDelete();
         }
 
         public bool checkString(string str)
@@ -184,7 +186,7 @@ namespace MyApp
                         catch (Exception ex)
                         {
                             MessageBox.Show(
-                                "Произошла ошибка\n" 
+                                "Произошла ошибка\n"
                                 + ex.ToString());
                         }
                         list.Add(it);
@@ -232,16 +234,16 @@ namespace MyApp
                     conn.Close();
                 }
                 if (!error)
-                    MessageBox.Show("Тема: " + 
-                        gThemesAddName.Text + 
+                    MessageBox.Show("Тема: " +
+                        gThemesAddName.Text +
                         "\nуспешно удалена!");
             }
         }
 
         public void SpecsAdd()
         {
-            if(done)
-            { 
+            if (done)
+            {
                 bool error = false;
                 MySqlConnection conn = new MySqlConnection(connStr);
                 try
@@ -420,14 +422,14 @@ namespace MyApp
                 {
                     conn.Open();
                     string sql = "call add_students('" +
-                        lastId + "','" + 
-                        gStudentAddSurname.Text + "','" + 
+                        lastId + "','" +
+                        gStudentAddSurname.Text + "','" +
                         id + "')";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     try
                     {
                         cmd.ExecuteNonQuery();
-                    } catch(MySqlException ex)
+                    } catch (MySqlException ex)
                     {
                         error = true;
                         MessageBox.Show("Произошла ошибка:\n" + ex.ToString());
@@ -492,10 +494,10 @@ namespace MyApp
                 try
                 {
                     conn.Open();
-                    string sql = 
+                    string sql =
                         "call rm_students('" +
                         groupsId + "','" +
-                        myId     + "')";
+                        myId + "')";
                     Console.WriteLine(sql);
                     try
                     {
@@ -512,8 +514,8 @@ namespace MyApp
                     conn.Close();
                 }
                 if (!error) MessageBox.Show(
-                    "Студент " + 
-                    gStudentDeleteStudent.Text + 
+                    "Студент " +
+                    gStudentDeleteStudent.Text +
                     " успешно удалён!");
             }
         }
@@ -592,7 +594,7 @@ namespace MyApp
 
         public void GroupsDelete()
         {
-            if(!done)
+            if (!done)
             {
                 MySqlConnection conn = new MySqlConnection(connStr);
                 try
@@ -959,9 +961,191 @@ namespace MyApp
             }
         }
 
+        public bool IsSplittable(int groupId, int subjectId)
+        {
+            int students = 0, themes = 0;
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call groupCount('" + groupId +"')";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    try
+                    {
+                        students = Convert.ToInt32(rdr[0].ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        // Console.WriteLine(ex.ToString());
+                    }
+                }
+                rdr.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "call themeCount('" + subjectId + "')";
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    try
+                    {
+                        themes = Convert.ToInt32(rdr[0].ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        // Console.WriteLine(ex.ToString());
+                    }
+                }
+                rdr.Close();
+            }
+            finally
+            {
+                conn.Close();
+            }
+            if (themes >= students) return true;
+                else return false;
+        }
+
+        public void DistributeThemes()
+        {
+            if (!done)
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT id, name FROM groups ORDER BY id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Console.WriteLine(ex.ToString());
+                        }
+                        gAutoGroups.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+                conn = new MySqlConnection(connStr);
+                try
+                {
+                    conn.Open();
+                    string sql = "SELECT id, name FROM subjects ORDER BY id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Data it = new Data();
+                        try
+                        {
+                            it.id = Convert.ToInt32(rdr[0].ToString());
+                            it.name = rdr[1].ToString();
+                            list2.Add(it);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Console.WriteLine(ex.ToString());
+                        }
+                        gAutoSubject.Items.Add(it.name);
+                    }
+                    rdr.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                int groupId = 0, subjectId = 0;
+                foreach (Data d in list)
+                    if (d.name == gAutoGroups.Text)
+                        groupId = d.id;
+                foreach (Data d in list2)
+                    if (d.name == gAutoSubject.Text)
+                        subjectId = d.id;
+                bool error = false;
+                if (IsSplittable(groupId,subjectId))
+                {
+                    MySqlConnection conn = new MySqlConnection(connStr);
+                    try
+                    {
+                        conn.Open();
+                        string sql = "call show_engaged_themes()";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        MySqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            try
+                            {
+                                string studentName = rdr[1].ToString();
+                                if (gAutoGroups.Text == rdr[0].ToString() &&
+                                    gAutoSubject.Text == rdr[2].ToString())
+                                {
+                                    error = true;
+                                    MessageBox.Show( "Студенту " + studentName + " уже назначена тема.\n" +
+                                        "Все студенты группы не должны иметь тем.\n" +
+                                        "Для успешного распределения удалите у " + studentName +  " тему " +
+                                        rdr[3].ToString(), "Невозможно распределить темы");
+                                    break;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                // Console.WriteLine(ex.ToString());
+                            }
+                        }
+                        rdr.Close();
+                        if (!error)
+                        {
+                            
+                        }
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+                else
+                {
+                    error = true;
+                    MessageBox.Show("Невозможно распределить темы.\nСтудентов больше чем существует тем!");
+                }
+                if (!error) MessageBox.Show("Темы успешно распределены между студентами!");
+            }
+        }
+
         private void ActionButton_Click(object sender, RoutedEventArgs e) // все события 
         {
             done = true;
+            if (type == "Распределить")                          DistributeThemes();
             if (type == "Темы" && action == "Добавить")          ThemesAdd();      // +
             if (type == "Темы" && action == "Удалить")           ThemesDelete();   // +
             if (type == "Специальности" && action == "Добавить") SpecsAdd();       // +

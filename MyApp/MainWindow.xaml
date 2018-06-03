@@ -49,7 +49,7 @@
         </Grid>
         <Grid Name="MainGrid" Margin="175,29,-3.8,-3" Background="#FFBFBFBF" MouseLeftButtonDown="MainGrid_MouseLeftButtonDown">
             <!-- gTables -->
-            <Grid Name="gTables" Visibility="Visible" Margin="10">
+            <Grid Name="gTables" Visibility="Hidden" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -142,7 +142,6 @@
                     <Label x:Name="Surname_Copy" HorizontalContentAlignment="Center" Content="Фамилия" Margin="0,33,0,40" FontStyle="Italic" FontSize="18"/>
                     <Label x:Name="Name_Copy" HorizontalContentAlignment="Center" Content="Имя" Margin="0,-6,2,80" FontStyle="Italic" FontSize="18"/>
                     <Label x:Name="Surname_Copy1" HorizontalContentAlignment="Center" Content="Права" Margin="0,73,1,0" FontSize="18"/>
-
                 </Grid>
 
             </Grid>
