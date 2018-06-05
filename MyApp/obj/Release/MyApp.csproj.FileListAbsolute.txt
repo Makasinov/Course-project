@@ -25,3 +25,9 @@ C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.csproj.CopyComplete
 C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.exe
 C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.pdb
 C:\Users\User\source\repos\MyApp\MyApp\obj\Release\MyApp.csprojAssemblyReference.cache
+C:\Users\User\source\repos\MyApp\MyApp\bin\Release\PdfSharp.Charting.dll
+C:\Users\User\source\repos\MyApp\MyApp\bin\Release\PdfSharp.dll
+C:\Users\User\source\repos\MyApp\MyApp\bin\Release\PdfSharp.xml
+C:\Users\User\source\repos\MyApp\MyApp\bin\Release\PdfSharp.Charting.xml
+C:\Users\User\source\repos\MyApp\MyApp\bin\Release\de\PdfSharp.resources.dll
+C:\Users\User\source\repos\MyApp\MyApp\bin\Release\de\PdfSharp.Charting.resources.dll

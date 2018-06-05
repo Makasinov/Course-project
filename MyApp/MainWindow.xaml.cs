@@ -320,6 +320,7 @@ namespace MyApp
                     listViewUsers.Items.Clear();
                     listViewTables.Items.Clear();
                     int counter = 0;
+                    idLogin = new List<Data>();
                     while (rdr.Read())
                         try
                         {
@@ -358,32 +359,26 @@ namespace MyApp
 
         private void setUsersTable(string connStr)
         {
-            //Console.WriteLine("wannaToCreate" + common.username + "\t" + common.password);
+            // Console.WriteLine("wannaToCreate" + common.username + "\t" + common.password);
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
                 //Console.WriteLine("Попытка подключения...");
                 conn.Open();
-
-                string sql = "call add_User('" +
-                             common.nUsername +
-                             "','" +
-                             common.nPassword +
-                             "','" +
-                             common.nRole +
-                             "','" +
-                             common.nName +
-                             "','" +
-                             common.nSurname +
-                             "','" +
-                             common.nGender +
-                             "')";
-
+                string sql = "call add_User(@username,@password,@role,@name,@surname,@gender)";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                rdr.Read();
-                rdr.Close();
+                cmd.Parameters.AddWithValue("@username", common.nUsername);
+                cmd.Parameters.AddWithValue("@password", common.nPassword);
+                cmd.Parameters.AddWithValue("@role", common.nRole);
+                cmd.Parameters.AddWithValue("@name", common.nName);
+                cmd.Parameters.AddWithValue("@surname", common.nSurname);
+                cmd.Parameters.AddWithValue("@gender", common.nGender);
+                cmd.ExecuteNonQuery();
                 conn.Close();
+                Data it = new Data();
+                it.id = idLogin.Count;
+                it.login = common.nUsername;
+                idLogin.Add(it);
             }
             catch (MySqlException ex)
             {
@@ -436,7 +431,7 @@ namespace MyApp
                     if (it.id == id && !deleted)
                         if (MessageBox.Show(
                             "Уверены что хотите удалить пользователя " + it.login + "?",
-                            "Подтвердите ", 
+                            "Подтвердите ",
                             MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             string connStr = connectionString.Text +
@@ -447,24 +442,27 @@ namespace MyApp
                             {
                                 Console.WriteLine("Попытка подключения...");
                                 conn.Open();
-                                string sql = "call rm_user('" + it.login + "')";
+                                string sql = "call rm_user(@user)";
                                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                                MySqlDataReader rdr = cmd.ExecuteReader();
-                                rdr.Read();
-                                rdr.Close();
+                                cmd.Parameters.AddWithValue("@user",it.login);
+                                cmd.ExecuteNonQuery();
                                 conn.Close();
                                 MessageBox.Show("Пользователь " + it.login + " успешно удалён!");
                                 listViewUsers.Items.RemoveAt(it.id);
                                 deleted = true;
-                            } catch (MySqlException ex)
+                                //idLogin.Remove(it);
+                                setParams(connStr);
+                            }
+                            catch (MySqlException ex)
                             {
                                 Console.WriteLine(ex.ToString());
                             }
                         }
+                        else return;
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Выберите пользователя для удаления","Ошибка");
+                // MessageBox.Show("Выберите пользователя для удаления","Ошибка");
                 Console.WriteLine(ex.ToString());
             }
         }

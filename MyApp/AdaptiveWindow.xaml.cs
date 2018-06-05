@@ -1018,6 +1018,12 @@ namespace MyApp
                 else return false;
         }
 
+        private class S_S
+        {
+            public string student;
+            public string theme;
+        }
+
         public void DistributeThemes()
         {
             if (!done)
@@ -1084,6 +1090,7 @@ namespace MyApp
             }
             else
             {
+                List<S_S> s_s = new List<S_S>();
                 int groupId = 0, subjectId = 0;
                 foreach (Data d in list)
                     if (d.name == gAutoGroups.Text)
@@ -1101,6 +1108,8 @@ namespace MyApp
                         string sql = "call show_engaged_themes()";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         MySqlDataReader rdr = cmd.ExecuteReader();
+                        string students = null;
+                        int i = 0;
                         while (rdr.Read())
                         {
                             try
@@ -1109,12 +1118,13 @@ namespace MyApp
                                 if (gAutoGroups.Text == rdr[0].ToString() &&
                                     gAutoSubject.Text == rdr[2].ToString())
                                 {
-                                    error = true;
-                                    MessageBox.Show( "Студенту " + studentName + " уже назначена тема.\n" +
-                                        "Все студенты группы не должны иметь тем.\n" +
-                                        "Для успешного распределения удалите у " + studentName +  " тему " +
-                                        rdr[3].ToString(), "Невозможно распределить темы");
-                                    break;
+                                    S_S it = new S_S();
+                                    it.student = studentName;
+                                    //error = true;
+                                    students += ++i + " " + studentName + "\n";
+                                    it.theme = rdr[3].ToString();
+                                    s_s.Add(it);
+                                    //break;
                                 }
                             }
                             catch (Exception ex)
@@ -1122,10 +1132,39 @@ namespace MyApp
                                 // Console.WriteLine(ex.ToString());
                             }
                         }
+                        if ( i != 0 )
+                        {
+                            students += "\nУ этих студентов уже зарезервированы темы!";
+                            MessageBox.Show(students,i + " студентов уже имеют темы");
+                        }
                         rdr.Close();
                         if (!error)
                         {
-                            
+                            foreach (S_S d in s_s) Console.WriteLine(d.student + "\t" + d.theme);
+                            Console.WriteLine();
+                            sql = "call autoSplit(@group_id,@subject_id)";
+                            conn = new MySqlConnection(connStr);
+                            cmd = new MySqlCommand(sql,conn);
+                            cmd.Parameters.AddWithValue("@group_id", groupId);
+                            cmd.Parameters.AddWithValue("@subject_id", subjectId);
+                            conn.Open();
+                            rdr = cmd.ExecuteReader();
+                            while(rdr.Read())
+                            {
+                                string studentTheme = rdr[3].ToString();
+                                string studentName = rdr[1].ToString();
+                                foreach (S_S s in s_s) 
+                                if (studentName != s.student)
+                                {
+                                    Console.Write(rdr[0].ToString() + "\t" + rdr[1].ToString());
+                                    Console.WriteLine(" - " + rdr[2].ToString() + "\t" + rdr[3].ToString() + " +");
+                                }
+                                else
+                                {
+                                    Console.Write(rdr[0].ToString() + "\t" + rdr[1].ToString());
+                                    Console.WriteLine(" - " + rdr[2].ToString() + "\t" + rdr[3].ToString() + " -");
+                                }
+                            }
                         }
                     }
                     finally
