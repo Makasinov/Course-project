@@ -1024,6 +1024,14 @@ namespace MyApp
             public string theme;
         }
 
+        private class BigData
+        {
+            public int    student_id;
+            public string student;
+            public int    theme_id;
+            public string theme;
+        }
+
         public void DistributeThemes()
         {
             if (!done)
@@ -1057,7 +1065,6 @@ namespace MyApp
                 {
                     conn.Close();
                 }
-
                 conn = new MySqlConnection(connStr);
                 try
                 {
@@ -1140,8 +1147,7 @@ namespace MyApp
                         rdr.Close();
                         if (!error)
                         {
-                            foreach (S_S d in s_s) Console.WriteLine(d.student + "\t" + d.theme);
-                            Console.WriteLine();
+                            List<BigData> BDlist = new List<BigData>();
                             sql = "call autoSplit(@group_id,@subject_id)";
                             conn = new MySqlConnection(connStr);
                             cmd = new MySqlCommand(sql,conn);
@@ -1149,22 +1155,29 @@ namespace MyApp
                             cmd.Parameters.AddWithValue("@subject_id", subjectId);
                             conn.Open();
                             rdr = cmd.ExecuteReader();
-                            while(rdr.Read())
+                            while (rdr.Read())
                             {
                                 string studentTheme = rdr[3].ToString();
                                 string studentName = rdr[1].ToString();
-                                foreach (S_S s in s_s) 
-                                if (studentName != s.student)
-                                {
-                                    Console.Write(rdr[0].ToString() + "\t" + rdr[1].ToString());
-                                    Console.WriteLine(" - " + rdr[2].ToString() + "\t" + rdr[3].ToString() + " +");
-                                }
-                                else
-                                {
-                                    Console.Write(rdr[0].ToString() + "\t" + rdr[1].ToString());
-                                    Console.WriteLine(" - " + rdr[2].ToString() + "\t" + rdr[3].ToString() + " -");
-                                }
+
+                                BigData it = new BigData();
+
+                                it.student_id = Convert.ToInt32(rdr[0].ToString());
+                                it.student = studentName;
+                                it.theme_id = Convert.ToInt32(rdr[2].ToString());
+                                it.theme = studentTheme;
+                                //Console.WriteLine(it.student_id + "\t" + it.student + "\t" + it.theme_id + "\t" + it.theme);
+                                BDlist.Add(it);
+                                /*
+                                foreach (S_S s in s_s)
+                                    if (s.student == studentName && s.theme == studentTheme)
+                                            Console.WriteLine(studentName + "\t" + studentTheme);
+                                */
                             }
+                            BDlist.RemoveAll(it => s_s.Exists(it2 => ((it2.student == it.student)||(it2.theme == it.theme)) ));
+                       
+                            foreach (BigData it in BDlist)
+                                Console.WriteLine(it.student_id + "\t" + it.student + "\t" + it.theme_id + "\t" + it.theme);
                         }
                     }
                     finally
