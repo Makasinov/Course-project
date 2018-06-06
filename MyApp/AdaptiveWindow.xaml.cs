@@ -21,8 +21,8 @@ namespace MyApp
 
         public class Data
         {
-            public int id;
-            public string name;
+            public int id { get; set; }
+            public string name { get; set; }
         }
 
         List<Data> list = new List<Data>();
@@ -1026,10 +1026,10 @@ namespace MyApp
 
         private class BigData
         {
-            public int    student_id;
-            public string student;
-            public int    theme_id;
-            public string theme;
+            public int student_id { get; set; }
+            public string student { get; set; }
+            public int    theme_id { get; set; }
+            public string theme { get; set; }
         }
 
         public void DistributeThemes()
@@ -1166,18 +1166,55 @@ namespace MyApp
                                 it.student = studentName;
                                 it.theme_id = Convert.ToInt32(rdr[2].ToString());
                                 it.theme = studentTheme;
-                                //Console.WriteLine(it.student_id + "\t" + it.student + "\t" + it.theme_id + "\t" + it.theme);
                                 BDlist.Add(it);
-                                /*
-                                foreach (S_S s in s_s)
-                                    if (s.student == studentName && s.theme == studentTheme)
-                                            Console.WriteLine(studentName + "\t" + studentTheme);
-                                */
                             }
-                            BDlist.RemoveAll(it => s_s.Exists(it2 => ((it2.student == it.student)||(it2.theme == it.theme)) ));
-                       
-                            foreach (BigData it in BDlist)
-                                Console.WriteLine(it.student_id + "\t" + it.student + "\t" + it.theme_id + "\t" + it.theme);
+                            for (int n = 0; n < BDlist.Count - 1; ++n)
+                            {
+                                BDlist.RemoveAll(
+                                    it => s_s.Exists(
+                                        it2 => ((it2.student == it.student) || (it2.theme == it.theme))
+                                        )
+                                );
+
+                                sql = "call add_engaged_themes(@myStudents_id," +
+                                    "@myStudents_Groups_id,@myThemes_id," +
+                                    "@myThemes_Subjects_id,@myMark)";
+                                conn = new MySqlConnection(connStr);
+                                conn.Open();
+                                cmd = new MySqlCommand(sql,conn);
+                                //Console.WriteLine("Count - " + BDlist.Count);
+                                int std_id = 0, thm_id = 0;
+                                string std = "", thm = "";
+                                try
+                                {
+                                    std_id = BDlist[0].student_id;
+                                    std    = BDlist[0].student;
+                                    thm_id = BDlist[0].theme_id;
+                                    thm    = BDlist[0].theme;
+                                } catch(Exception ex)
+                                {
+                                    Console.WriteLine(ex.ToString());
+                                }
+                                cmd.Parameters.AddWithValue("@myStudents_id", std_id);
+                                cmd.Parameters.AddWithValue("@myStudents_Groups_id", groupId);
+                                cmd.Parameters.AddWithValue("@myThemes_id", thm_id);
+                                cmd.Parameters.AddWithValue("@myThemes_Subjects_id", subjectId);
+                                cmd.Parameters.AddWithValue("@myMark",0);
+                                try
+                                {
+                                    cmd.ExecuteNonQuery();
+                                } catch(Exception ex)
+                                {
+                                    Console.WriteLine(ex.ToString());
+                                }
+                                S_S s = new S_S();
+                                s.student = std;
+                                s.theme = thm;
+                                s_s.Add(s);
+                                
+                            }
+                            conn.Close();
+                            MessageBox.Show("Свободные темы были распределены");
                         }
                     }
                     finally
@@ -1190,7 +1227,7 @@ namespace MyApp
                     error = true;
                     MessageBox.Show("Невозможно распределить темы.\nСтудентов больше чем существует тем!");
                 }
-                if (!error) MessageBox.Show("Темы успешно распределены между студентами!");
+                //if (!error) MessageBox.Show("Темы успешно распределены между студентами!");
             }
         }
 
