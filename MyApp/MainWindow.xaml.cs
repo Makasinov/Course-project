@@ -1010,9 +1010,23 @@ namespace MyApp
 
                 // Save the document...
                 const string filename = "Report.pdf";
-                document.Save(filename);
+                
+                try
+                {
+                    document.Save(filename);
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine(ex.ToString);
+                }
                 // ...and start a viewer.
-                Process.Start(filename);
+                try
+                {
+                    Process.Start(filename);
+                } catch (Exception ex)
+                {
+                    //Console.WriteLine(ex.ToString);
+                }
             }
         }
 
@@ -1071,9 +1085,23 @@ namespace MyApp
                     conn.Close();
                     // Save the document...
                     const string filename = "Log.pdf";
-                    document.Save(filename);
+                    try
+                    {
+                        document.Save(filename);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Console.WriteLine(ex.ToString);
+                    }
                     // ...and start a viewer.
-                    Process.Start(filename);
+                    try
+                    {
+                        Process.Start(filename);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Console.WriteLine(ex.ToString);
+                    }
                 }
             }
         }

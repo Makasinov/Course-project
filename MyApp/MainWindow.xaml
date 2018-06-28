@@ -108,7 +108,7 @@
                 <Button x:Name="ButtonDelete2" Content="Удалить" Margin="479,16,10.2,0" VerticalAlignment="Top" Height="30" Click="Button_Click_3" FontSize="18" />
             </Grid>
             <!-- gSettings -->
-            <Grid Name="gSettings" Visibility="Visible" Height="418" Margin="10,10,10,0" VerticalAlignment="Top">
+            <Grid Name="gSettings" Visibility="Hidden" Height="418" Margin="10,10,10,0" VerticalAlignment="Top">
                 <Grid Margin="10,27,10,0" Background="#FFAEAEAE" Height="79" VerticalAlignment="Top">
                     <TextBox Name="connectionString" IsEnabled="False" Margin="0,0,0,2" TextWrapping="Wrap" Text="server=localhost;persistsecurityinfo=True;database=mydb;allowuservariables=True;SslMode=none;" Background="{x:Null}" FontSize="16"/>
                 </Grid>
