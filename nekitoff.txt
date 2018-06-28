@@ -1,5 +1,0 @@
-CREATE TABLE v1 (ST_ID int PRIMARY KEY , GR_ID int, TH_ID int);
-CREATE PROCEDURE CheckTheme (GroupN int,  ThemeN int) 
-BEGIN 
-IF (NOT exists(SELECT AT_ID FROM v1 WHERE GR_ID = @GroupN AND TH_ID = @ThemeN))
- /// ELSE INSERT 

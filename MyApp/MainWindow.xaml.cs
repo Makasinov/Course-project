@@ -42,6 +42,20 @@ namespace MyApp
             public string login;
         }
 
+        private class S_S
+        {
+            public string student;
+            public string theme;
+        }
+
+        private class BigData
+        {
+            public int student_id { get; set; }
+            public string student { get; set; }
+            public int theme_id { get; set; }
+            public string theme { get; set; }
+        }
+
         List<Data> idLogin = new List<Data>();
         
         public MainWindow()
@@ -653,6 +667,167 @@ namespace MyApp
             }
         }
 
+        private void DrawEngagedThemesInGroup(PdfPage page, PdfDocument document,int group_id)
+        {
+            int y = 60, x = 26;
+            page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            drawTable(gfx, page);
+            string connStr = connectionString.Text +
+                          "user id=" + common.username +
+                          ";password=" + common.password;
+            string name,sql;
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                sql = "SELECT name FROM groups WHERE id = @myid";
+                cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@myid",group_id);
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                name = rdr[0].ToString();
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            gfx.DrawString("Group " + name, titleFont, XBrushes.Black,
+                new XRect(50, 10, page.Width, 100),
+              XStringFormats.TopLeft);
+
+            List<Data> list2 = new List<Data>();
+            conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                sql = "SELECT id,name FROM subjects ORDER BY id";
+                cmd = new MySqlCommand(sql, conn);
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Data it = new Data();
+                    it.id = Convert.ToInt32(rdr[0].ToString());
+                    it.login = rdr[1].ToString();
+                    list2.Add(it);
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+            foreach (Data d in list2)
+            {
+                List<S_S> s_s = new List<S_S>();
+                List<BigData> BDlist = new List<BigData>();
+
+                sql = "call autoSplit(@group_id,@subject_id)";
+                conn = new MySqlConnection(connStr);
+                cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@group_id", group_id);
+                cmd.Parameters.AddWithValue("@subject_id", d.id);
+                conn.Open();
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    string studentTheme = rdr[3].ToString();
+                    string studentName = rdr[1].ToString();
+
+                    BigData it = new BigData();
+
+                    it.student_id = Convert.ToInt32(rdr[0].ToString());
+                    it.student = studentName;
+                    it.theme_id = Convert.ToInt32(rdr[2].ToString());
+                    it.theme = studentTheme;
+                    BDlist.Add(it);
+                }
+                conn.Close();
+                for (int n = 0; n < BDlist.Count - 1; ++n)
+                {
+
+                    int std_id = 0, thm_id = 0;
+                    string std = "", thm = "";
+                    try
+                    {
+                        std_id = BDlist[0].student_id;
+                        std = BDlist[0].student;
+                        thm_id = BDlist[0].theme_id;
+                        thm = BDlist[0].theme;
+                    }
+                    catch (Exception ex)
+                    {
+                        //Console.WriteLine(ex.ToString());
+                    }
+                    
+                    S_S s = new S_S();
+                    s.student = std;
+                    s.theme = thm;
+                    s_s.Add(s);
+
+                    BDlist.RemoveAll(
+                        it => s_s.Exists(
+                            it2 => ((it2.student == it.student) || (it2.theme == it.theme))
+                            )
+                    );
+                }
+                //foreach (S_S s in s_s) Console.WriteLine(s.student + " " + s.theme);
+                //Console.WriteLine(d.login);
+                //foreach (BigData bd in BDlist)
+                {
+                    foreach (S_S s in s_s)
+                    {
+                        gfx.DrawString(d.login, font, XBrushes.Black,
+                            new XRect(x, y, 250, 0));
+                        gfx.DrawString(s.student, font, XBrushes.Black,
+                            new XRect(x + 160, y, 250, 0));
+                        gfx.DrawString(s.theme, font, XBrushes.Black,
+                            new XRect(x + 250, y, 250, 0));
+
+                        //Console.WriteLine(d.login + " ---- " + s.student + " ---- " + s.theme);
+                        y += 15;
+                    }
+                    //y += 15;
+                    //Console.WriteLine(name + "\t-\t" + bd.student + "\t-\t" + d.login  + "\t-\t" + bd.theme);
+                    //gfx.DrawString(d.login, font, XBrushes.Black,
+                    //    new XRect(x, y, 300, 0));
+                }
+                //Console.WriteLine("-------------------------\n");
+            }
+            drawLines(gfx, page, 180,400);
+        }
+
+        private void DrawFreeThemes(PdfPage page,PdfDocument document) // Larionova's last hope
+        {
+            List<Data> list1 = new List<Data>();
+            
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "SELECT id, name FROM groups ORDER BY id";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Data it = new Data();
+                    it.id = Convert.ToInt32(rdr[0].ToString());
+                    it.login = rdr[1].ToString();
+                    list1.Add(it);
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+            foreach (Data d in list1) DrawEngagedThemesInGroup(page,document,d.id);
+        }
+
         private void drawGroups(PdfPage page) // Группы 
         {
             XGraphics gfx = XGraphics.FromPdfPage(page);
@@ -830,12 +1005,76 @@ namespace MyApp
                 drawSubjects(page);
                 page = document.AddPage();
                 drawSpecs(page);
+                //page = document.AddPage();
+                DrawFreeThemes(page,document);
 
                 // Save the document...
                 const string filename = "Report.pdf";
                 document.Save(filename);
                 // ...and start a viewer.
                 Process.Start(filename);
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            bool error = false;
+            string connStr = connectionString.Text +
+                                      "user id=" + common.username +
+                                      ";password=" + common.password;
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                conn.Close();
+            }
+            catch (MySqlException ex)
+            {
+                error = true;
+                MessageBox.Show("Ошибка подключения.\nВозможно вы не авторизованы.");
+            }
+            if (!error && (common.nRole == "root" || common.nRole=="Admin"))
+            {
+                conn = new MySqlConnection(connStr);
+                MySqlCommand cmd = new MySqlCommand();
+                PdfDocument document = new PdfDocument();
+                try
+                {
+                    conn.Open();
+                    document.Info.Title = "Log";
+                    PdfPage page = document.AddPage();
+
+                    string sql = "SELECT user, action, describtion FROM log";
+                    cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+                    drawTable(gfx, page);
+                    gfx.DrawString("Log", titleFont, XBrushes.Black,
+                        new XRect(50, 10, page.Width, 100),
+                        XStringFormats.TopLeft);
+                    drawLines(gfx, page, 120, 320);
+                    int y = 60, x = 26;
+                    while (rdr.Read())
+                    {
+                        gfx.DrawString(rdr[0].ToString(), font, XBrushes.Black,
+                            new XRect(x, y, 250, 0));
+                        gfx.DrawString(rdr[1].ToString(), font, XBrushes.Black,
+                            new XRect(x + 100, y, 250, 0));
+                        gfx.DrawString(rdr[2].ToString(), font, XBrushes.Black,
+                            new XRect(x + 300, y, 250, 0));
+                        y += 15;
+                    }
+                }
+                finally
+                {
+                    conn.Close();
+                    // Save the document...
+                    const string filename = "Log.pdf";
+                    document.Save(filename);
+                    // ...and start a viewer.
+                    Process.Start(filename);
+                }
             }
         }
     }
